@@ -32,7 +32,7 @@
 
 export async function connectToDatabase() {
 //   if (cached.conn) {
-//     return cached.conn;
+    // return cached.conn;
 //   }
 
 //   if (!cached.promise) {
