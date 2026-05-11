@@ -30,7 +30,7 @@
 
 // global.mongoose = cached;
 
-export async function connectToDatabase() {
+// export async function connectToDatabase() {
 //   if (cached.conn) {
     // return cached.conn;
 //   }
