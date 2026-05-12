@@ -6,7 +6,7 @@ type connectionObject = {
 // isConnected is a number (mongoose readyState), and ? means optional.
 }
 
-const connection:connectionObject = {}
+const connection:connectionObject = {} 
 
 async function connectToDatabase() : Promise<void> {
     if(connection.isConnected) {
