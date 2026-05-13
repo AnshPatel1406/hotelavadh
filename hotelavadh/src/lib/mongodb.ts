@@ -14,8 +14,8 @@ async function connectToDatabase() : Promise<void> {
         return;
     }
     try{
-        // TODO : Add your MongoDB connection string in the .env.local file as MONGODB_URI
-        const db = await mongoose.connect(process.env.MONGODB_URI || "" , {})
+        
+        const db = await mongoose.connect(process.env.MONGODB_URI as string);
         connection.isConnected = db.connections[0].readyState
 // Stores mongoose connection state in your connection cache.
 // readyState values are numbers, commonly:
