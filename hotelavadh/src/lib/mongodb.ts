@@ -14,7 +14,7 @@ async function connectToDatabase() : Promise<void> {
         return;
     }
     try{
-        
+
         const db = await mongoose.connect(process.env.MONGODB_URI as string);
         connection.isConnected = db.connections[0].readyState
 // Stores mongoose connection state in your connection cache.
