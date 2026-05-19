@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     if (!name || !email || password.length < 6) {
       return Response.json({ success: false, message: "Invalid input" }, { status: 400 });
     }
-
+ 
     await connectToDatabase();
 
     const exists = await User.findOne({ email });
