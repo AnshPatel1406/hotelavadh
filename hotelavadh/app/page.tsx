@@ -1,27 +1,32 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+/* ─── Data ─── */
 const features = [
   {
-    title: "Rooms",
-    desc: "Comfortable rooms for solo, family & premium stays.",
+    num: "01",
+    tag: "Stay",
+    title: "Rooms & Suites",
+    desc: "Comfortable rooms for solo, family & premium stays. Each space is designed for rest and refinement.",
     href: "/rooms",
-    badge: "Stay",
+    cta: "Explore rooms",
   },
   {
+    num: "02",
+    tag: "Eat",
     title: "Dining",
-    desc: "Delicious veg & non-veg options with great ambience.",
+    desc: "Delicious veg & non-veg options served with care. A warm ambience that makes every meal special.",
     href: "/dining",
-    badge: "Eat",
+    cta: "View menu",
   },
   {
-    title: "Banquet",
-    desc: "Perfect venue for weddings, parties & corporate events.",
+    num: "03",
+    tag: "Celebrate",
+    title: "Banquet Hall",
+    desc: "The perfect venue for weddings, parties & corporate events — tailored to your vision.",
     href: "/banquet",
-    badge: "Celebrate",
+    cta: "Book venue",
   },
 ];
 
@@ -32,94 +37,189 @@ const amenities = [
   "Restaurant",
   "Room Service",
   "Travel Desk",
-  "CCTV",
+  "CCTV Security",
   "Banquet Hall",
 ];
 
+const stats = [
+  { num: "4.9★", label: "Rating" },
+  { num: "12+",  label: "Years" },
+  { num: "5k+",  label: "Guests" },
+];
+
+/* ─── Page ─── */
 export default function HomePage() {
   return (
-    <div className="py-10 space-y-12">
-      {/* Hero */}
-      <section className="rounded-2xl border p-6 md:p-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <div className="space-y-4">
-          <Badge variant="secondary">Hotel • Dining • Banquet</Badge>
-          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
-            Comfort. Dining. Hospitality.
-          </h1>
-          <p className="text-muted-foreground max-w-xl">
-            A premium stay experience with beautiful rooms, delicious food, and a banquet for every celebration.
-          </p>
-          <div className="flex gap-3">
-            <Button asChild>
-              <Link href="/rooms">Explore Rooms</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href="/contact">Contact</Link>
-            </Button>
+    <div className="space-y-0">
+
+      {/* ── Hero ── */}
+      <section className="relative bg-[#1C1712] overflow-hidden rounded-2xl">
+        {/* subtle gold radial glow */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(184,134,11,0.08)_0%,transparent_60%)]" />
+
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 px-8 md:px-14 py-16 md:py-20 items-center">
+
+          {/* Left — copy */}
+          <div className="space-y-6">
+            {/* eyebrow */}
+            <p className="flex items-center gap-3 text-[11px] tracking-[0.18em] uppercase text-[#D4A843] font-sans font-medium">
+              Est. 2026 · Premium Hospitality
+              <span className="block w-8 h-px bg-[#D4A843]" />
+            </p>
+
+            <h1 className="font-serif text-[2.8rem] md:text-[3.4rem] leading-[1.1] font-medium tracking-tight text-[#FAF7F2]">
+              Comfort &{" "}
+              <em className="font-serif italic text-[#D4A843] not-italic">Elegance</em>
+              <br />Redefined.
+            </h1>
+
+            <p className="text-[15px] leading-[1.8] text-[#FAF7F2]/55 font-light max-w-sm">
+              A premium stay experience with beautifully appointed rooms, exquisite dining, and the perfect banquet for every celebration.
+            </p>
+
+            <div className="flex flex-wrap gap-3 pt-1">
+              <Button
+                asChild
+                className="bg-[#D4A843] text-[#1C1712] hover:bg-[#B8860B] rounded-none px-7 py-5 text-[13px] tracking-wide font-medium font-sans transition-colors"
+              >
+                <Link href="/rooms">Explore Rooms</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-none border-[#FAF7F2]/20 bg-transparent text-[#FAF7F2]/75 hover:bg-[#FAF7F2]/5 hover:border-[#FAF7F2]/40 px-7 py-5 text-[13px] tracking-wide font-sans transition-colors"
+              >
+                <Link href="/contact">Contact Us</Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Right — image placeholder */}
+          <div className="relative h-[260px] md:h-[320px] border border-[#D4A843]/20 rounded-sm overflow-hidden bg-white/[0.02] flex items-center justify-center">
+            <Image src="/homepage/Gemini_Avadh.png" alt="Hotel exterior" fill className="object-cover" />
+            <div className="flex flex-col items-center gap-2 opacity-25">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <rect x="6" y="18" width="36" height="24" rx="1" stroke="#FAF7F2" strokeWidth="1.5"/>
+                <path d="M2 18L24 6L46 18" stroke="#FAF7F2" strokeWidth="1.5"/>
+                <rect x="19" y="28" width="10" height="14" rx="1" stroke="#FAF7F2" strokeWidth="1.5"/>
+                <rect x="10" y="22" width="8" height="8" rx="0.5" stroke="#FAF7F2" strokeWidth="1.5"/>
+                <rect x="30" y="22" width="8" height="8" rx="0.5" stroke="#FAF7F2" strokeWidth="1.5"/>
+              </svg>
+              <span className="text-[11px] tracking-[0.15em] uppercase text-[#FAF7F2]">Hotel Photo</span>
+            </div>
           </div>
         </div>
 
-        <div className="w-full md:w-[420px] h-[220px] md:h-[260px] rounded-2xl bg-muted border overflow-hidden">
-  <div className="w-full h-full bg-gradient-to-br from-muted to-background" />
-</div>
-      </section>
-
-      {/* Feature cards */}
-      <section className="space-y-4">
-        <div className="flex items-end justify-between">
-          <h2 className="text-xl font-semibold">Explore</h2>
-          <span className="text-sm text-muted-foreground">Rooms • Dining • Banquet</span>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          {features.map((f) => (
-            <Card key={f.title} className="hover:shadow-sm transition">
-              <CardContent className="p-5 space-y-3">
-                <Badge variant="outline">{f.badge}</Badge>
-                <div className="text-lg font-medium">{f.title}</div>
-                <p className="text-sm text-muted-foreground">{f.desc}</p>
-                <Button asChild variant="outline">
-                  <Link href={f.href}>Learn more</Link>
-                </Button>
-              </CardContent>
-            </Card>
+        {/* Stats strip */}
+        <div className="relative z-10 border-t border-[#FAF7F2]/8 px-8 md:px-14 py-5 flex gap-8 md:justify-end">
+          {stats.map((s) => (
+            <div key={s.label} className="text-center">
+              <p className="font-serif text-[1.5rem] font-medium text-[#D4A843]">{s.num}</p>
+              <p className="text-[10px] tracking-[0.12em] uppercase text-[#FAF7F2]/40 mt-0.5">{s.label}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      <Separator />
+      {/* ── Features ── */}
+      <section className="pt-14 space-y-6">
+        {/* header */}
+        <div className="flex items-baseline justify-between border-b border-border pb-4">
+          <h2 className="font-serif text-2xl font-medium text-foreground">Our Offerings</h2>
+          <span className="text-[11px] tracking-[0.1em] uppercase text-muted-foreground">
+            Rooms · Dining · Banquet
+          </span>
+        </div>
 
-      {/* Amenities */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Amenities</h2>
-        <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
+        {/* card grid — 1px-gap technique */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border rounded-sm overflow-hidden">
+          {features.map((f) => (
+            <div
+              key={f.title}
+              className="group relative bg-background hover:bg-secondary/40 transition-colors duration-300 p-8 overflow-hidden"
+            >
+              {/* decorative number */}
+              <span className="absolute top-5 right-5 font-serif text-5xl font-light text-border select-none leading-none">
+                {f.num}
+              </span>
+
+              {/* tag */}
+              <span className="inline-block text-[10px] tracking-[0.16em] uppercase text-[#8B6508] dark:text-[#D4A843] border border-[#D4A843]/30 px-2.5 py-1 mb-5 rounded-sm">
+                {f.tag}
+              </span>
+
+              <h3 className="font-serif text-xl font-medium mb-2.5">{f.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground font-light mb-6">{f.desc}</p>
+
+              <Link
+                href={f.href}
+                className="inline-flex items-center gap-2 text-[11px] tracking-[0.1em] uppercase text-[#8B6508] dark:text-[#D4A843] font-medium group-hover:gap-3 transition-all"
+              >
+                {f.cta}
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </Link>
+
+              {/* bottom gold reveal line */}
+              <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#D4A843] group-hover:w-full transition-all duration-300" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Amenities ── */}
+      <section className="pt-14 space-y-6">
+        <div className="flex items-baseline justify-between border-b border-border pb-4">
+          <h2 className="font-serif text-2xl font-medium text-foreground">Amenities</h2>
+          <span className="text-[11px] tracking-[0.1em] uppercase text-muted-foreground">
+            Included with every stay
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-sm overflow-hidden">
           {amenities.map((a) => (
-            <div key={a} className="border rounded-xl p-3 text-sm">
+            <div
+              key={a}
+              className="bg-background hover:bg-secondary/40 transition-colors px-5 py-4 flex items-center gap-3 text-[13.5px] text-muted-foreground font-light"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4A843] flex-shrink-0" />
               {a}
             </div>
           ))}
         </div>
       </section>
 
-      {/* CTA (call/whatsapp like Vintana) */}
-      <section className="rounded-2xl border p-6 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="space-y-2">
-          <div className="text-lg font-medium">Need a quick booking?</div>
-          <div className="text-sm text-muted-foreground">
-            Call or WhatsApp us and we’ll help you instantly.
+      {/* ── CTA ── */}
+      <section className="pt-14">
+        <div className="rounded-sm border border-[#D4A843]/25 bg-[#F5E6C0]/40 dark:bg-[#8B6508]/10 px-8 md:px-12 py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <p className="text-[10px] tracking-[0.16em] uppercase text-[#8B6508] dark:text-[#D4A843] mb-1.5">
+              Quick Booking
+            </p>
+            <p className="font-serif text-2xl font-medium text-foreground mb-1">Need a reservation?</p>
+            <p className="text-sm text-muted-foreground font-light">
+              Call or WhatsApp us — we'll get you sorted instantly.
+            </p>
+          </div>
+          <div className="flex gap-3 flex-shrink-0">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-none border-[#D4A843]/50 text-[#8B6508] dark:text-[#D4A843] hover:bg-[#D4A843]/10 hover:border-[#D4A843] px-6 text-[13px] tracking-wide font-sans transition-colors"
+            >
+              <a href="tel:+919999999999">Call Now</a>
+            </Button>
+            <Button
+              asChild
+              className="rounded-none bg-[#8B6508] text-[#FAF7F2] hover:bg-[#B8860B] px-6 text-[13px] tracking-wide font-sans transition-colors"
+            >
+              <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer">
+                WhatsApp
+              </a>
+            </Button>
           </div>
         </div>
-        <div className="flex gap-3">
-          <Button asChild variant="outline">
-            <a href="tel:+919999999999">Call Now</a>
-          </Button>
-          <Button asChild>
-            <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer">
-              WhatsApp
-            </a>
-          </Button>
-        </div>
       </section>
+
     </div>
   );
 }
