@@ -1,11 +1,20 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const highlights = [
   { title: "Pure Veg & Jain Options", desc: "Jain food available on request." },
   { title: "Lunch & Dinner", desc: "Fresh meals served daily with seasonal specials." },
   { title: "Family Friendly", desc: "Comfortable seating and warm ambience." },
+];
+
+const DinnerImages = [
+  "/dining_images/1.jpg",
+  "/dining_images/2.jpg",
+  "/dining_images/3.jpg",
+  "/dining_images/4.jpg",
+  "/dining_images/5.jpg",
 ];
 
 export default function DiningPage() {
@@ -35,7 +44,7 @@ export default function DiningPage() {
           <div className="space-y-1">
             <div className="font-medium">Timings</div>
             <div className="text-sm text-muted-foreground">
-              Lunch: 12:00 PM – 3:30 PM • Dinner: 7:00 PM – 11:00 PM
+              Lunch: 11:00 AM – 3:30 PM • Dinner: 7:00 PM – 11:00 PM
             </div>
           </div>
           <div className="flex gap-3">
@@ -52,10 +61,20 @@ export default function DiningPage() {
       </Card>
 
       <div className="grid gap-3 grid-cols-2 md:grid-cols-4">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="h-32 rounded-2xl border bg-muted" />
-        ))}
-      </div>
+  {DinnerImages.map((img, i) => (
+    <div
+      key={i}
+      className="relative h-32 overflow-hidden rounded-2xl"
+    >
+      <Image
+        src={img}
+        alt={`Dining ${i + 1}`}
+        fill
+        className="object-cover hover:scale-105 transition duration-300"
+      />
+    </div>
+  ))}
+</div>
     </div>
   );
 }

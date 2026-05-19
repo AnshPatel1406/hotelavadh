@@ -92,7 +92,7 @@ export default function HomePage() {
 
           {/* Right — image placeholder */}
           <div className="relative h-[260px] md:h-[320px] border border-[#D4A843]/20 rounded-sm overflow-hidden bg-white/[0.02] flex items-center justify-center">
-            <Image src="/homepage/Gemini_Avadh.png" alt="Hotel exterior" fill className="object-cover" />
+            <Image src="/homepage_images/Gemini_Avadh.png" alt="Hotel exterior" fill className="object-cover" />
       
           </div>
         </div>
