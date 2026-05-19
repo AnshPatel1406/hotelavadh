@@ -35,7 +35,7 @@ export default function Footer() {
       <Separator />
       <div className="mx-auto max-w-6xl px-4 py-4 text-xs text-muted-foreground flex justify-between">
         <span>© {new Date().getFullYear()} Hotel Avadh</span>
-        <span>Built with Next.js + shadcn/ui</span>
+        <span>Built by Ansh Patel</span>
       </div>
     </footer>
   );

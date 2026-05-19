@@ -41,11 +41,7 @@ const amenities = [
   "Banquet Hall",
 ];
 
-const stats = [
-  { num: "4.9★", label: "Rating" },
-  { num: "12+",  label: "Years" },
-  { num: "5k+",  label: "Guests" },
-];
+
 
 /* ─── Page ─── */
 export default function HomePage() {
@@ -97,28 +93,11 @@ export default function HomePage() {
           {/* Right — image placeholder */}
           <div className="relative h-[260px] md:h-[320px] border border-[#D4A843]/20 rounded-sm overflow-hidden bg-white/[0.02] flex items-center justify-center">
             <Image src="/homepage/Gemini_Avadh.png" alt="Hotel exterior" fill className="object-cover" />
-            <div className="flex flex-col items-center gap-2 opacity-25">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <rect x="6" y="18" width="36" height="24" rx="1" stroke="#FAF7F2" strokeWidth="1.5"/>
-                <path d="M2 18L24 6L46 18" stroke="#FAF7F2" strokeWidth="1.5"/>
-                <rect x="19" y="28" width="10" height="14" rx="1" stroke="#FAF7F2" strokeWidth="1.5"/>
-                <rect x="10" y="22" width="8" height="8" rx="0.5" stroke="#FAF7F2" strokeWidth="1.5"/>
-                <rect x="30" y="22" width="8" height="8" rx="0.5" stroke="#FAF7F2" strokeWidth="1.5"/>
-              </svg>
-              <span className="text-[11px] tracking-[0.15em] uppercase text-[#FAF7F2]">Hotel Photo</span>
-            </div>
+      
           </div>
         </div>
 
-        {/* Stats strip */}
-        <div className="relative z-10 border-t border-[#FAF7F2]/8 px-8 md:px-14 py-5 flex gap-8 md:justify-end">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="font-serif text-[1.5rem] font-medium text-[#D4A843]">{s.num}</p>
-              <p className="text-[10px] tracking-[0.12em] uppercase text-[#FAF7F2]/40 mt-0.5">{s.label}</p>
-            </div>
-          ))}
-        </div>
+      
       </section>
 
       {/* ── Features ── */}
@@ -206,13 +185,13 @@ export default function HomePage() {
               variant="outline"
               className="rounded-none border-[#D4A843]/50 text-[#8B6508] dark:text-[#D4A843] hover:bg-[#D4A843]/10 hover:border-[#D4A843] px-6 text-[13px] tracking-wide font-sans transition-colors"
             >
-              <a href="tel:+919999999999">Call Now</a>
+              <a href="tel:+919426365544">Call Now</a>
             </Button>
             <Button
               asChild
               className="rounded-none bg-[#8B6508] text-[#FAF7F2] hover:bg-[#B8860B] px-6 text-[13px] tracking-wide font-sans transition-colors"
             >
-              <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer">
+              <a href="https://wa.me/919426365544" target="_blank" rel="noreferrer">
                 WhatsApp
               </a>
             </Button>
