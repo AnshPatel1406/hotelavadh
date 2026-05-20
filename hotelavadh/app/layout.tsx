@@ -28,10 +28,10 @@ const geist = Geist({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn(playfair.variable, dmSans.variable, geist.variable)}>
+    <html lang="en" className={cn("light", playfair.variable, dmSans.variable, geist.variable)}>
       <body className={cn("min-h-screen bg-background text-foreground")}>
         <Navbar />
-        <main className="mx-auto max-w-6xl px-4 md:px-6 py-8">{children}</main>
+        <main className="mx-auto max-w-6xl px-4 py-10">{children}</main>
         <Footer />
       </body>
     </html>
