@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { AmenitiesSection } from "@/components/site/amenities";
+
 /* ─── Data ─── */
 const features = [
   {
@@ -33,8 +34,8 @@ const features = [
     tag: "Outdoor Space",
     title: "Party Plot",
     desc: "Spacious outdoor area ideal for gatherings, picnics & fun celebrations under the sky.",
-    href: "/party-plot",
-    cta: "Book party plot",
+    href: "/contact",
+    cta: "Enquire now",
   }
 ];
 
@@ -150,29 +151,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Amenities ── */}
-
       <AmenitiesSection />
-
-      {/* <section className="pt-14 space-y-6">
-        <div className="flex items-baseline justify-between border-b border-border pb-4">
-          <h2 className="font-serif text-2xl font-medium text-foreground">Amenities</h2>
-          <span className="text-[11px] tracking-[0.1em] uppercase text-muted-foreground">
-            Included with every stay
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-sm overflow-hidden">
-          {amenities.map((a) => (
-            <div
-              key={a}
-              className="bg-background hover:bg-[#0F5C5C]/[0.04] transition-colors px-5 py-4 flex items-center gap-3 text-[13.5px] text-muted-foreground font-light"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0F5C5C] flex-shrink-0" />
-              {a}
-            </div>
-          ))}
-        </div>
-      </section> */}
 
       {/* ── CTA ── */}
       <section className="pt-14">
@@ -181,7 +160,9 @@ export default function HomePage() {
             <p className="text-[10px] tracking-[0.16em] uppercase text-[#0F5C5C] mb-1.5">
               Quick Booking
             </p>
-            <p className="font-serif text-2xl font-medium text-foreground mb-1">Need a reservation?</p>
+            <p className="font-serif text-2xl font-medium text-foreground mb-1">
+              Need a reservation?
+            </p>
             <p className="text-sm text-muted-foreground font-light">
               Call or WhatsApp us — we'll get you sorted instantly.
             </p>
