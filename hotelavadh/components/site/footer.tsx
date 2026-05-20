@@ -17,8 +17,8 @@ export default function Footer() {
           <div className="space-y-2">
             <div className="font-medium">Contact</div>
             <div className="text-sm text-white/80 space-y-1">
-              <a className="block hover:underline" href="tel:+919999999999">
-                +91 99999 99999
+              <a className="block hover:underline" href="tel:+919428504802">
+                +91 94285 04802
               </a>
               <a className="block hover:underline" href="mailto:info@hotelavadh.com">
                 info@hotelavadh.com

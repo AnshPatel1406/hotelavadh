@@ -52,7 +52,7 @@ export default function ContactPage() {
             title="Map"
             className="w-full h-[340px]"
             loading="lazy"
-            src="https://www.google.com/maps?q=23.733917,72.980000&output=embed"
+            src="https://www.google.com/maps?q=Hotel%20Avadh%20Himmatnagar&output=embed"
           />
         </div>
       </div>

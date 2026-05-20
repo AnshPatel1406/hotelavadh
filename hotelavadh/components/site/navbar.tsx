@@ -45,8 +45,8 @@ export default function Navbar() {
         <div className="bg-[#0F5C5C] text-white">
           <div className="mx-auto max-w-6xl px-4 h-12 flex items-center justify-between text-sm">
             <div className="flex items-center gap-4">
-              <a className="hover:underline" href="tel:+919999999999">
-                +91 99999 99999
+              <a className="hover:underline" href="tel:+919428504802">
+                +91 94285 04802
               </a>
               <span className="opacity-50 hidden sm:inline">|</span>
               <a className="hover:underline hidden sm:inline" href="mailto:info@hotelavadh.com">
@@ -96,13 +96,13 @@ export default function Navbar() {
             </nav>
 
             {/* MOBILE MENU */}
-            <div className="md:hidden w-full flex items-center justify-between">
-              <div className="text-sm font-medium">Menu</div>
+            <div className="md:hidden w-full flex items-center justify-end">
+              {/* <div className="text-sm font-medium">Menu</div> */}
 
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="outline" className="h-9">
-                    Open
+                    Menu
                   </Button>
                 </SheetTrigger>
 
@@ -120,7 +120,7 @@ export default function Navbar() {
                     ))}
                     <Separator className="my-2" />
                     <Button asChild variant="outline">
-                      <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer">
+                      <a href="https://wa.me/919428504802" target="_blank" rel="noreferrer">
                         WhatsApp
                       </a>
                     </Button>

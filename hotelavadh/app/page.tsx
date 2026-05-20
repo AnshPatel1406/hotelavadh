@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
+import { AmenitiesSection } from "@/components/site/amenities";
 /* ─── Data ─── */
 const features = [
   {
     num: "01",
     tag: "Stay",
-    title: "Rooms & Suites",
+    title: "Rooms",
     desc: "Comfortable rooms for solo, family & premium stays. Each space is designed for rest and refinement.",
     href: "/rooms",
     cta: "Explore rooms",
@@ -28,6 +28,14 @@ const features = [
     href: "/banquet",
     cta: "Book venue",
   },
+  {
+    num: "04",
+    tag: "Outdoor Space",
+    title: "Party Plot",
+    desc: "Spacious outdoor area ideal for gatherings, picnics & fun celebrations under the sky.",
+    href: "/party-plot",
+    cta: "Book party plot",
+  }
 ];
 
 const amenities = [
@@ -106,11 +114,11 @@ export default function HomePage() {
         <div className="flex items-baseline justify-between border-b border-border pb-4">
           <h2 className="font-serif text-2xl font-medium text-foreground">Our Offerings</h2>
           <span className="text-[11px] tracking-[0.1em] uppercase text-muted-foreground">
-            Rooms · Dining · Banquet
+            Rooms · Dining · Banquet · Party Plot
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border rounded-sm overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border rounded-sm overflow-hidden">
           {features.map((f) => (
             <div
               key={f.title}
@@ -142,7 +150,10 @@ export default function HomePage() {
       </section>
 
       {/* ── Amenities ── */}
-      <section className="pt-14 space-y-6">
+
+      <AmenitiesSection />
+
+      {/* <section className="pt-14 space-y-6">
         <div className="flex items-baseline justify-between border-b border-border pb-4">
           <h2 className="font-serif text-2xl font-medium text-foreground">Amenities</h2>
           <span className="text-[11px] tracking-[0.1em] uppercase text-muted-foreground">
@@ -161,7 +172,7 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ── CTA ── */}
       <section className="pt-14">
@@ -182,14 +193,14 @@ export default function HomePage() {
               variant="outline"
               className="rounded-none border-[#0F5C5C]/35 text-[#0F5C5C] hover:bg-[#0F5C5C]/5 hover:border-[#0F5C5C]/55 px-6 text-[13px] tracking-wide font-sans transition-colors"
             >
-              <a href="tel:+919426365544">Call Now</a>
+              <a href="tel:+919428504802">Call Now</a>
             </Button>
 
             <Button
               asChild
               className="rounded-none bg-[#0F5C5C] text-white hover:bg-[#0B4A4A] px-6 text-[13px] tracking-wide font-sans transition-colors"
             >
-              <a href="https://wa.me/919426365544" target="_blank" rel="noreferrer">
+              <a href="https://wa.me/919428504802" target="_blank" rel="noreferrer">
                 WhatsApp
               </a>
             </Button>
