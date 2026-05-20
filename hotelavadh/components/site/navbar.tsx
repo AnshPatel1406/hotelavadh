@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
+
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -42,6 +44,7 @@ export default function Navbar() {
         <Link href="/" className="font-semibold text-lg tracking-tight">
           Hotel Avadh
         </Link>
+        
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
