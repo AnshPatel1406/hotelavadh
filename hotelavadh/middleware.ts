@@ -16,5 +16,5 @@ export default withAuth(
 
 // Protect these routes:
 export const config = {
-  matcher: ["/rooms/:path*", "/profile/:path*", "/my-bookings/:path*", "/admin/:path*"],
+  matcher: ["/profile/:path*", "/my-bookings/:path*", "/admin/:path*"],
 };
