@@ -67,7 +67,7 @@ export default function GalleryPage() {
           className="text-4xl md:text-6xl font-light tracking-tight leading-[1.1]"
           style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
         >
-          Glimpses of
+          Glimpses off
           <br />
           <span className="italic text-muted-foreground">Hotel Avadh</span>
         </h1>
