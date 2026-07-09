@@ -1,5 +1,6 @@
 1) Fix DB COnnection and Oauth COnnection
-2) User Should be Alble to login and session is assigned 
+2) User Should be Alble to login(Login API is missing i think it stucks at login with credential) and session is assigned 
+also fix google Oauth , the data should reflect in Mongo Atlas
 3) middleware settings , if booking and not logged in the go to loginpage same for profile
 4) DB connection fix code to add rooms and users 
 5) Header for Mobile Interface Fix 
