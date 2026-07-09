@@ -1,6 +1,7 @@
 import connectToDatabase from "@/src/lib/mongodb";
 import Room from "@/src/models/Room";
 import mongoose from "mongoose";
+import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
@@ -11,7 +12,7 @@ export async function GET(req: Request) {
     const id = pathname.split("/").pop()?.trim() || "";
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return Response.json(
+      return NextResponse.json(
         { success: false, message: "Invalid room id", id },
         { status: 400 }
       );
@@ -20,16 +21,16 @@ export async function GET(req: Request) {
     const room = await Room.findById(id).lean();
 
     if (!room) {
-      return Response.json(
+      return NextResponse.json(
         { success: false, message: "Room not found" },
         { status: 404 }
       );
     }
 
-    return Response.json({ success: true, room });
+    return NextResponse.json({ success: true, room });
   } catch (error) {
     console.log("GET ROOM BY ID ERROR:", error);
-    return Response.json(
+    return NextResponse.json(
       { success: false, message: "Failed to fetch room" },
       { status: 500 }
     );

@@ -1,9 +1,10 @@
 import connectToDatabase from "@/src/lib/mongodb";
 import Room from "@/src/models/Room";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-      return Response.json({
+      return NextResponse.json({
     success: true,
     message: "Demo Rooms API working",
   });
@@ -29,7 +30,7 @@ export async function GET() {
 
     console.log("GET ROOMS ERROR:", error);
 
-    return Response.json({
+    return NextResponse.json({
       success: false,
       message: "Failed to fetch rooms",
     });

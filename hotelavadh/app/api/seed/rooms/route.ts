@@ -1,5 +1,6 @@
 import connectToDatabase from "@/src/lib/mongodb";
 import Room from "@/src/models/Room";
+import { NextResponse } from "next/server";
 
 export async function POST() {
   await connectToDatabase();
@@ -43,5 +44,5 @@ export async function POST() {
     },
   ]);
 
-  return Response.json({ success: true, count: rooms.length });
+  return NextResponse.json({ success: true, count: rooms.length });
 }

@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import connectToDatabase from "@/src/lib/mongodb";
 import User from "@/src/models/User";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
@@ -10,14 +11,14 @@ export async function POST(req: Request) {
     const password = String(body.password || "");
 
     if (!name || !email || password.length < 6) {
-      return Response.json({ success: false, message: "Invalid input" }, { status: 400 });
+      return NextResponse.json({ success: false, message: "Invalid input" }, { status: 400 });
     }
  
     await connectToDatabase();
 
     const exists = await User.findOne({ email });
     if (exists) {
-      return Response.json({ success: false, message: "Email already registered" }, { status: 409 });
+      return NextResponse.json({ success: false, message: "Email already registered" }, { status: 409 });
     }
 
     const hashed = await bcrypt.hash(password, 10);
@@ -30,8 +31,8 @@ export async function POST(req: Request) {
       role: "user",
     });
 
-    return Response.json({ success: true, message: "User created" });
+    return NextResponse.json({ success: true, message: "User created" });
   } catch (e) {
-    return Response.json({ success: false, message: "Server error" }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
   }
 }
