@@ -1,0 +1,12 @@
+1) Fix DB COnnection and Oauth COnnection
+2) User Should be Alble to login and session is assigned 
+3) middleware settings , if booking and not logged in the go to loginpage same for profile
+4) DB connection fix code to add rooms and users 
+5) Header for Mobile Interface Fix 
+
+6) Change in UI : if Logged in there should be the photo and logout option , my bookins and all 
+7) For Booking the user should be verified by otp or email otp or something 
+8) Online Payment
+9) a qr code generation or a OTp generation for Reception 
+10) Admin Dashboard to add and remove Rooms, change price, add Photos change menu and all
+11) Reception Login to Checkin and Checkout
