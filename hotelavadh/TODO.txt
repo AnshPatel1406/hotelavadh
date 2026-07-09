@@ -4,8 +4,12 @@ also fix google Oauth , the data should reflect in Mongo Atlas
 3) middleware settings , if booking and not logged in the go to loginpage same for profile
 4) DB connection fix code to add rooms and users 
 5) Header for Mobile Interface Fix 
-
+*) make use of mongoose , folders (Models and Schema ) as optimized as possible , design a clean model for each user and all
+with proper componenets in it , dont miss a small detail
+*) make the optimized use of that model and schema and reduce the code reducndancy
 6) Change in UI : if Logged in there should be the photo and logout option , my bookins and all 
+the shadcn componenets are written but not used in the pages , fix that , make use of them 
+, make the code as small as possible , remove excessive tailwind css , use the shadcn componenets
 7) For Booking the user should be verified by otp or email otp or something 
 8) Online Payment
 9) a qr code generation or a OTp generation for Reception 
