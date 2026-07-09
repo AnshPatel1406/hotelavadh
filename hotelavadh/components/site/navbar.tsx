@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-
+import ProfileMenu from "@/components/navbar/ProfileMenu";
 const leftLinks = [
   { href: "/", label: "Home" },
   { href: "/dining", label: "Dining" },
@@ -55,9 +55,13 @@ export default function Navbar() {
             </div>
 
             {/* Optional right side (you can add socials later) */}
-            <div className="hidden sm:flex items-center gap-3 opacity-90">
-              <span className="text-xs tracking-wide">Premium Hospitality</span>
-            </div>
+           <div className="hidden sm:flex items-center ml-auto gap-5">
+  <span className="text-xs tracking-[0.15em] text-white">
+    Premium Hospitality
+  </span>
+
+  <ProfileMenu />
+</div>
           </div>
         </div>
 

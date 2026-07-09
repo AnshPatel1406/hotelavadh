@@ -110,7 +110,7 @@ export default function GalleryPage() {
                 "group relative w-full break-inside-avoid rounded-2xl overflow-hidden bg-muted border border-border/40 cursor-zoom-in",
                 item.span === "tall"   ? "aspect-[3/4]" :
                 item.span === "wide"   ? "aspect-[4/3]" :
-                                         "aspect-square",
+                "aspect-square",
               ].join(" ")}
             >
               <Image
