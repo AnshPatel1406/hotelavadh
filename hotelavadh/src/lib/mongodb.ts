@@ -27,11 +27,10 @@ async function connectToDatabase() : Promise<void> {
         console.log("DB Connected SuccessFully");
         
     }
-    catch(error) {
-        console.log("Database Connection Failed:",error);
-        
-        process.exit(1)
-    }
+    catch (error) {
+    console.error("Database Connection Failed:", error);
+    throw error;
+}
 
 }
 
