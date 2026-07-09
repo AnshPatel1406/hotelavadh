@@ -64,7 +64,7 @@ export default function HomePage() {
           {/* Left — copy */}
           <div className="space-y-6">
             <p className="flex items-center gap-3 text-[11px] tracking-[0.18em] uppercase text-[#0F5C5C] font-sans font-medium">
-              Est. 2026 · Premium Hospitality
+              Est. 2027 · Premium Hospitality
               <span className="block w-8 h-px bg-[#0F5C5C]/70" />
             </p>
 
