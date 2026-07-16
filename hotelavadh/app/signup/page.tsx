@@ -23,8 +23,48 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
 
   const passwordTooShort = password.length > 0 && password.length < 6;
+
+  // ── Email validation ──
+  const emailRegex = /^[^\s@]+@gmail\.com$/i;
+  const emailIsValid = emailRegex.test(email);
+  const showEmailError = emailTouched && email.length > 0 && !emailIsValid;
+
+  // ── Password strength ──
+  type StrengthLevel = {
+    label: string;
+    barColor: string;
+    textColor: string;
+  };
+
+  const strengthLevels: StrengthLevel[] = [
+    { label: "Weak", barColor: "bg-red-500", textColor: "text-red-500" },
+    { label: "Fair", barColor: "bg-orange-500", textColor: "text-orange-500" },
+    { label: "Good", barColor: "bg-yellow-500", textColor: "text-yellow-600" },
+    { label: "Better", barColor: "bg-lime-500", textColor: "text-lime-600" },
+    { label: "Excellent", barColor: "bg-green-500", textColor: "text-green-600" },
+  ];
+
+  function getPasswordStrength(pw: string) {
+    if (!pw) return { score: 0, percent: 0, ...strengthLevels[0] };
+
+    let score = 0;
+    if (pw.length >= 6) score++;
+    if (pw.length >= 10) score++;
+    if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+    const idx = Math.max(0, Math.min(score - 1, strengthLevels.length - 1));
+    const percent = (score / 5) * 100;
+
+    return { score, percent, ...strengthLevels[idx] };
+  }
+
+  const passwordStrength = getPasswordStrength(password);
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
@@ -172,11 +212,28 @@ export default function SignupPage() {
                       type="email"
                       autoComplete="email"
                       required
-                      className="w-full rounded-lg border border-input bg-background py-2.5 pl-10 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-ring/40"
+                      aria-invalid={showEmailError}
+                      className={`w-full rounded-lg border bg-background py-2.5 pl-10 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:ring-2 ${
+                        showEmailError
+                          ? "border-destructive focus:border-destructive focus:ring-destructive/30"
+                          : "border-input focus:border-primary focus:ring-ring/40"
+                      }`}
                       placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      onBlur={() => setEmailTouched(true)}
                     />
+                  </div>
+                  <div
+                    className={`grid transition-all duration-300 ease-out ${
+                      showEmailError
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <p className="overflow-hidden text-xs text-destructive animate-in fade-in slide-in-from-top-1 duration-200">
+                      Only Gmail addresses are accepted (e.g. you@gmail.com).
+                    </p>
                   </div>
                 </div>
 
@@ -199,6 +256,7 @@ export default function SignupPage() {
                       placeholder="At least 6 characters"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      onFocus={() => setPasswordTouched(true)}
                     />
                     <button
                       type="button"
@@ -213,11 +271,40 @@ export default function SignupPage() {
                       )}
                     </button>
                   </div>
-                  {passwordTooShort ? (
-                    <p className="text-xs text-destructive">
-                      Password must be at least 6 characters.
-                    </p>
-                  ) : null}
+                  <div
+                    className={`grid transition-all duration-300 ease-out ${
+                      passwordTouched && password.length > 0
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden space-y-1.5 pt-1">
+                      <div className="flex h-1.5 gap-1">
+                        {strengthLevels.map((level, i) => (
+                          <span
+                            key={level.label}
+                            className={`h-full flex-1 rounded-full transition-colors duration-300 ${
+                              i < passwordStrength.score
+                                ? passwordStrength.barColor
+                                : "bg-muted"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p
+                          className={`text-xs font-medium transition-colors duration-300 ${passwordStrength.textColor}`}
+                        >
+                          {passwordStrength.label}
+                        </p>
+                        {passwordTooShort ? (
+                          <p className="text-xs text-destructive animate-in fade-in duration-200">
+                            At least 6 characters required
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {msg && !success ? (
@@ -228,7 +315,11 @@ export default function SignupPage() {
 
                 <Button
                   type="submit"
-                  disabled={loading || passwordTooShort}
+                  disabled={
+                    loading ||
+                    passwordTooShort ||
+                    (email.length > 0 && !emailIsValid)
+                  }
                   size="lg"
                   className="group w-full justify-center gap-2 py-5"
                 >
