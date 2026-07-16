@@ -194,7 +194,7 @@ export default function SignupPage() {
                       type={showPassword ? "text" : "password"}
                       autoComplete="new-password"
                       required
-                      minLength={6}
+                      minLength={8}
                       className="w-full rounded-lg border border-input bg-background py-2.5 pl-10 pr-10 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-ring/40"
                       placeholder="At least 6 characters"
                       value={password}
@@ -215,7 +215,7 @@ export default function SignupPage() {
                   </div>
                   {passwordTooShort ? (
                     <p className="text-xs text-destructive">
-                      Password must be at least 6 characters.
+                      Password must be at least 8 characters.
                     </p>
                   ) : null}
                 </div>
