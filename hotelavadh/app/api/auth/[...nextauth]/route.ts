@@ -79,11 +79,12 @@ const handler = NextAuth({
                 // If login successful -> return user object
                 // This object becomes available inside JWT + session callbacks
                 return {
-                    id: user._id.toString(),
-                    name: user.name,
-                    email: user.email,
-                    image: user.image || "",
-                };
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    image: user.image || "",
+    role: user.role,
+};
             },
         }),
     ],
@@ -116,74 +117,58 @@ const handler = NextAuth({
         // signIn callback runs AFTER successful login
         async signIn({ user, account }) {
 
-            // If user logged in using Google OAuth
-            if (account?.provider === "google") {
+    if (account?.provider === "google") {
 
-                // Connect database
-                await connectToDatabase();
+        await connectToDatabase();
 
-                // Get email safely
-                const email = user.email?.toLowerCase().trim();
+        const email = user.email?.toLowerCase().trim();
 
-                // Reject login if email missing
-                if (!email) {
-                    return false;
-                }
+        if (!email) {
+            return false;
+        }
 
-                // Check if user already exists in MongoDB
-                const existingUser = await User.findOne({ email });
+        let existingUser = await User.findOne({ email });
 
-                // If user does NOT exist -> create new user
-                if (!existingUser) {
+        if (!existingUser) {
 
-                    await User.create({
+            existingUser = await User.create({
 
-                        // User name from Google
-                        name: user.name || "User",
+                name: user.name || "User",
+                email,
+                image: user.image || "",
+                provider: "google",
+                role: "user",
 
-                        // User email from Google
-                        email,
+            });
 
-                        // Google profile image
-                        image: user.image || "",
+        }
 
-                        // Login provider
-                        provider: "google",
+        (user as any).id = existingUser._id.toString();
+        (user as any).role = existingUser.role;
+    }
 
-                        // Default role
-                        role: "user",
-                    });
-                }
-            }
-
-            // Allow login
-            return true;
-        },
+    return true;
+},
 
         // jwt callback runs whenever JWT token is created/updated
         async jwt({ token, user }) {
 
-            // If user exists -> add user id into token
-            // So we can access it later from session
-            if (user) {
-                token.id = (user as any).id;
-            }
+    if (user) {
+        token.id = (user as any).id;
+        token.role = (user as any).role;
+    }
 
-            // Return updated token
-            return token;
-        },
+    return token;
+},
 
         // session callback runs whenever session is accessed
         async session({ session, token }) {
 
-            // Copy user id from token into session object
-            // So frontend can access:
-            // session.user.id
-            (session as any).user.id = token.id as string;
+    (session as any).user.id = token.id as string;
+    (session as any).user.role = token.role as "admin" | "user";
 
-            // Return updated session
-            return session;
-        },
+    return session;
+},
     },
 });
 
