@@ -13,11 +13,6 @@ export async function POST(req: Request) {
     if (!name || !email || password.length < 6) {
       return NextResponse.json({ success: false, message: "Invalid input" }, { status: 400 });
     }
-
-    const emailRegex = /^[^\s@]+@gmail\.com$/i;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ success: false, message: "Only Gmail addresses are accepted" }, { status: 400 });
-    }
  
     await connectToDatabase();
 
