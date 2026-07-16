@@ -33,6 +33,11 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, message: "User created" });
   } catch (e) {
-    return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
-  }
+  console.error("Register error:", e);
+
+  return NextResponse.json(
+    { success: false, message: "Server error" },
+    { status: 500 }
+  );
+}
 }
