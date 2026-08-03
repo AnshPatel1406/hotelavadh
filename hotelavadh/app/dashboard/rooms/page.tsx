@@ -1,10 +1,11 @@
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import connectToDatabase from "@/src/lib/mongodb";
 import Room from "@/src/models/Room";
 import { RoomList } from "@/components/dashboard/RoomList";
 
 export default async function DashboardRoomsPage() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const role = (session?.user as any)?.role || "user";
   
   await connectToDatabase();

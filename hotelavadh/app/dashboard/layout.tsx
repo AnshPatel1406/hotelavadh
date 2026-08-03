@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 
 export default async function DashboardLayout({
@@ -7,7 +8,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   // Protect the dashboard route
   if (!session || !session.user) {

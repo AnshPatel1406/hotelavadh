@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import Room from "@/src/models/Room";
@@ -7,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, BedDouble, CalendarCheck, Users } from "lucide-react";
 
 export default async function DashboardPage() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const userName = session?.user?.name || "Staff Member";
   
   await connectToDatabase();

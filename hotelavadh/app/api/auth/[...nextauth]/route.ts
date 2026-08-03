@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import connectToDatabase from "@/src/lib/mongodb";
 import User from "@/src/models/User";
 
-const handler = NextAuth({
+export const authOptions = {
     // providers = Different login methods available in the app
     // TODO : Add OTP Login Later
 
@@ -98,7 +98,7 @@ const handler = NextAuth({
     // Store sessions using JWT instead of database sessions
     // Easier and cleaner for small-medium apps
     session: {
-        strategy: "jwt"
+        strategy: "jwt" as any
     },
 
     // Custom auth pages
@@ -115,7 +115,7 @@ const handler = NextAuth({
     callbacks: {
 
         // signIn callback runs AFTER successful login
-        async signIn({ user, account }) {
+        async signIn({ user, account }: { user: any, account: any }) {
 
     if (account?.provider === "google") {
 
@@ -151,7 +151,7 @@ const handler = NextAuth({
 },
 
         // jwt callback runs whenever JWT token is created/updated
-        async jwt({ token, user }) {
+        async jwt({ token, user }: { token: any, user: any }) {
 
     if (user) {
         token.id = (user as any).id;
@@ -162,7 +162,7 @@ const handler = NextAuth({
 },
 
         // session callback runs whenever session is accessed
-        async session({ session, token }) {
+        async session({ session, token }: { session: any, token: any }) {
 
     (session as any).user.id = token.id as string;
     (session as any).user.role = token.role as "admin" | "user" | "reception";
@@ -170,7 +170,9 @@ const handler = NextAuth({
     return session;
 },
     },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
 

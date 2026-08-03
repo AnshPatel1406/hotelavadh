@@ -1,10 +1,11 @@
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import { BookingList } from "@/components/dashboard/BookingList";
 
 export default async function DashboardBookingsPage() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const role = (session?.user as any)?.role || "user";
   
   await connectToDatabase();
