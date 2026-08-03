@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AddRoomModal } from "@/components/dashboard/AddRoomModal";
 
 export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: string }) {
   const [rooms, setRooms] = useState(initialRooms);
@@ -28,12 +29,7 @@ export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: st
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Manage Rooms</CardTitle>
-        {isAdmin && (
-          <button className="flex items-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800">
-            <Plus className="h-4 w-4" />
-            Add Room
-          </button>
-        )}
+        {isAdmin && <AddRoomModal onCreated={() => window.location.reload()} />}
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">

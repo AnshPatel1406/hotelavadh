@@ -1,14 +1,18 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import crypto from "crypto";
 import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import Payment from "@/src/models/Payments";
+import User from "@/src/models/User";
+import Room from "@/src/models/Room";
 import { VerifyPaymentSchema } from "@/src/schemas/VerifyPaymentSchema";
+import { sendBookingConfirmationEmail } from "@/src/lib/email";
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || !(session.user as any)?.id) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -45,7 +49,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, message: "Forbidden" }, { status: 403 });
     }
 
-    // Update booking status
+    // Update booking status to confirmed
     booking.status = "confirmed";
     await booking.save();
 
@@ -59,9 +63,30 @@ export async function POST(req: Request) {
       razorpayPaymentId: razorpay_payment_id,
     });
 
+    // Send confirmation email now that booking is confirmed
+    const [user, room] = await Promise.all([
+      User.findById(booking.user),
+      Room.findById(booking.room),
+    ]);
+
+    if (user?.email && room) {
+      sendBookingConfirmationEmail({
+        guestEmail: user.email,
+        guestName: user.name || "Guest",
+        bookingId: booking._id.toString(),
+        roomTitle: room.title,
+        checkInDate: new Date(booking.checkInDate).toLocaleDateString("en-IN", { dateStyle: "long" }),
+        checkOutDate: new Date(booking.checkOutDate).toLocaleDateString("en-IN", { dateStyle: "long" }),
+        guests: booking.guests,
+        checkInCode: booking.checkInCode,
+        qrDataUrl: booking.qrData,
+      }).catch((err) => console.error("Payment verify email failed:", err));
+    }
+
     return NextResponse.json({ success: true, message: "Payment verified successfully", payment });
   } catch (error) {
     console.error("VERIFY RAZORPAY PAYMENT ERROR:", error);
     return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
   }
 }
+
