@@ -3,13 +3,14 @@ import Room from "@/src/models/Room";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     await connectToDatabase();
 
-    // Extract id from URL path: /api/rooms/<id>
-    const pathname = new URL(req.url).pathname;
-    const id = pathname.split("/").pop()?.trim() || "";
+    const { id } = await params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
