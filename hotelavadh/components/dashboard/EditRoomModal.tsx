@@ -29,7 +29,7 @@ export function EditRoomModal({ room, onUpdated }: { room: any; onUpdated: () =>
     setForm(prev => ({
       ...prev,
       amenities: prev.amenities.includes(a)
-        ? prev.amenities.filter(x => x !== a)
+        ? prev.amenities.filter((x: string) => x !== a)
         : [...prev.amenities, a],
     }));
   };
