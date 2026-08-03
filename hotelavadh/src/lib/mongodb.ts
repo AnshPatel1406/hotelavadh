@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import dns from "node:dns";
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+dns.setDefaultResultOrder('ipv4first');
 
 // Use a global cache to avoid multiple connections in development
 // caused by Next.js HMR (Hot Module Replacement)
@@ -37,7 +40,7 @@ async function connectToDatabase(): Promise<mongoose.Connection> {
       cachedPromise = null;
       throw error;
     });
-    
+
     global._mongoosePromise = cachedPromise;
   }
 
