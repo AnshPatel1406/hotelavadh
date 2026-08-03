@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import mongoose from "mongoose";
@@ -9,7 +10,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || !(session.user as any)?.id) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -27,8 +28,9 @@ export async function PATCH(
       return NextResponse.json({ success: false, message: "Booking not found" }, { status: 404 });
     }
 
-    // Only allow the owner or an admin to cancel
-    if (booking.user.toString() !== (session.user as any).id && (session.user as any).role !== "admin") {
+    // Only allow the owner, an admin, or reception to cancel
+    const userRole = (session.user as any).role;
+    if (booking.user.toString() !== (session.user as any).id && userRole !== "admin" && userRole !== "reception") {
       return NextResponse.json({ success: false, message: "Forbidden" }, { status: 403 });
     }
 
