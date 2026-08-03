@@ -9,6 +9,12 @@ export interface IBooking extends Document {
   status: "pending" | "confirmed" | "cancelled" | "checked_in" | "checked_out";
   guests: number;
   specialRequests?: string;
+  // Check-in system fields
+  checkInCode: string;         // Unique 6-char code for check-in
+  qrData: string;              // Base64 QR image or URL
+  guestEmail?: string;         // For walk-in bookings without a user account
+  guestName?: string;          // For walk-in bookings without a user account
+  bookedBy: "user" | "admin" | "reception"; // Who created this booking
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,6 +33,15 @@ const bookingsSchema = new Schema<IBooking>(
     },
     guests: { type: Number, required: true, min: 1 },
     specialRequests: { type: String, trim: true },
+    checkInCode: { type: String, default: "" },
+    qrData: { type: String, default: "" },
+    guestEmail: { type: String, trim: true },
+    guestName: { type: String, trim: true },
+    bookedBy: {
+      type: String,
+      enum: ["user", "admin", "reception"],
+      default: "user",
+    },
   },
   { timestamps: true }
 );
