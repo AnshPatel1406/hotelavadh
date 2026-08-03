@@ -1,29 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddRoomModal } from "@/components/dashboard/AddRoomModal";
+import { EditRoomModal } from "@/components/dashboard/EditRoomModal";
+import { DeleteRoomModal } from "@/components/dashboard/DeleteRoomModal";
 
 export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: string }) {
   const [rooms, setRooms] = useState(initialRooms);
   const isAdmin = role === "admin";
 
-  const handleDelete = async (roomId: string) => {
-    if (!isAdmin || !confirm("Are you sure you want to delete this room?")) return;
 
-    try {
-      const res = await fetch(`/api/rooms/${roomId}`, { method: "DELETE" });
-      if (res.ok) {
-        setRooms(rooms.filter((r) => r._id !== roomId));
-      } else {
-        alert("Failed to delete room");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error deleting room");
-    }
-  };
 
   return (
     <Card>
@@ -58,12 +45,8 @@ export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: st
                   </td>
                   {isAdmin && (
                     <td className="px-6 py-4 flex items-center gap-3">
-                      <button className="text-blue-600 hover:text-blue-900" title="Edit">
-                        <Pencil className="h-4 w-4" />
-                      </button>
-                      <button onClick={() => handleDelete(room._id)} className="text-red-600 hover:text-red-900" title="Delete">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <EditRoomModal room={room} onUpdated={() => window.location.reload()} />
+                      <DeleteRoomModal room={room} onDelete={() => window.location.reload()} />
                     </td>
                   )}
                 </tr>
