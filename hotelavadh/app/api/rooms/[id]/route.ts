@@ -1,5 +1,6 @@
 import connectToDatabase from "@/src/lib/mongodb";
 import Room from "@/src/models/Room";
+import Booking from "@/src/models/Bookings";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
@@ -113,6 +114,19 @@ export async function DELETE(
     }
 
     await connectToDatabase();
+
+    // Check if room has active bookings
+    const activeBooking = await Booking.findOne({
+      room: id,
+      status: { $in: ["pending", "confirmed", "checked_in"] }
+    });
+
+    if (activeBooking) {
+      return NextResponse.json(
+        { success: false, message: "Cannot delete room. It has active or pending bookings." },
+        { status: 400 }
+      );
+    }
 
     const deletedRoom = await Room.findByIdAndDelete(id);
 

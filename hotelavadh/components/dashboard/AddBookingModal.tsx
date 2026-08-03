@@ -20,7 +20,7 @@ export function AddBookingModal({ rooms, onCreated }: { rooms: Room[]; onCreated
     guestEmail: "",
     checkInDate: "",
     checkOutDate: "",
-    guests: 1,
+    guests: "1",
     specialRequests: "",
   });
   const [error, setError] = useState("");
@@ -47,7 +47,7 @@ export function AddBookingModal({ rooms, onCreated }: { rooms: Room[]; onCreated
         setError(data.message || "Failed to create booking");
       } else {
         setSuccess(`Booking created! Code: ${data.booking.checkInCode}. Email sent to ${form.guestEmail}`);
-        setForm({ roomId: "", guestName: "", guestEmail: "", checkInDate: "", checkOutDate: "", guests: 1, specialRequests: "" });
+        setForm({ roomId: "", guestName: "", guestEmail: "", checkInDate: "", checkOutDate: "", guests: "1", specialRequests: "" });
         onCreated();
         setTimeout(() => { setOpen(false); setSuccess(""); }, 3000);
       }
@@ -160,7 +160,7 @@ export function AddBookingModal({ rooms, onCreated }: { rooms: Room[]; onCreated
                   max={selectedRoom?.maxGuests || 10}
                   className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
                   value={form.guests}
-                  onChange={(e) => setForm({ ...form, guests: Number(e.target.value) })}
+                  onChange={(e) => setForm({ ...form, guests: e.target.value })}
                 />
               </div>
 

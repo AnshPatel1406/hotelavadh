@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Search, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddBookingModal } from "@/components/dashboard/AddBookingModal";
+import { CancelBookingModal } from "@/components/dashboard/CancelBookingModal";
 
 export function BookingList({ initialBookings, rooms, role }: { initialBookings: any[]; rooms: any[]; role: string }) {
   const [bookings, setBookings] = useState(initialBookings);
@@ -11,21 +12,7 @@ export function BookingList({ initialBookings, rooms, role }: { initialBookings:
   const isAdmin = role === "admin";
   const isStaff = role === "admin" || role === "reception";
 
-  const handleCancel = async (bookingId: string) => {
-    if (!confirm("Are you sure you want to cancel this booking?")) return;
 
-    try {
-      const res = await fetch(`/api/bookings/${bookingId}/cancel`, { method: "PATCH" });
-      if (res.ok) {
-        setBookings(bookings.map((b) => b._id === bookingId ? { ...b, status: "cancelled" } : b));
-      } else {
-        alert("Failed to cancel booking");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error cancelling booking");
-    }
-  };
 
   const filteredBookings = bookings.filter((b) => 
     b.user?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -84,9 +71,7 @@ export function BookingList({ initialBookings, rooms, role }: { initialBookings:
                   </td>
                   <td className="px-6 py-4 flex items-center gap-3">
                     {booking.status === "confirmed" && isAdmin && (
-                      <button onClick={() => handleCancel(booking._id)} className="flex items-center gap-1 text-red-600 hover:text-red-900" title="Cancel Booking">
-                        <XCircle className="h-4 w-4" /> <span className="text-xs">Cancel</span>
-                      </button>
+                      <CancelBookingModal booking={booking} onCanceled={() => window.location.reload()} />
                     )}
                   </td>
                 </tr>
