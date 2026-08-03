@@ -130,7 +130,7 @@ export function AddBookingModal({ rooms, onCreated }: { rooms: Room[]; onCreated
                   <label className="block text-sm font-medium text-gray-700 mb-1">Check-in *</label>
                   <input
                     required
-                    type="date"
+                    type="datetime-local"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
                     value={form.checkInDate}
                     onChange={(e) => setForm({ ...form, checkInDate: e.target.value })}
@@ -140,7 +140,7 @@ export function AddBookingModal({ rooms, onCreated }: { rooms: Room[]; onCreated
                   <label className="block text-sm font-medium text-gray-700 mb-1">Check-out *</label>
                   <input
                     required
-                    type="date"
+                    type="datetime-local"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
                     value={form.checkOutDate}
                     onChange={(e) => setForm({ ...form, checkOutDate: e.target.value })}

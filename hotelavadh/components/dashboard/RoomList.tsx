@@ -8,7 +8,7 @@ import { DeleteRoomModal } from "@/components/dashboard/DeleteRoomModal";
 
 export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: string }) {
   const [rooms, setRooms] = useState(initialRooms);
-  const isAdmin = role === "admin";
+  const isStaff = role === "admin" || role === "reception";
 
 
 
@@ -16,7 +16,7 @@ export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: st
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Manage Rooms</CardTitle>
-        {isAdmin && <AddRoomModal onCreated={() => window.location.reload()} />}
+        {isStaff && <AddRoomModal onCreated={() => window.location.reload()} />}
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
@@ -28,7 +28,7 @@ export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: st
                 <th className="px-6 py-3">Price/Night</th>
                 <th className="px-6 py-3">Guests</th>
                 <th className="px-6 py-3">Status</th>
-                {isAdmin && <th className="px-6 py-3">Actions</th>}
+                {isStaff && <th className="px-6 py-3">Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -43,7 +43,7 @@ export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: st
                       {room.isActive ? "Active" : "Inactive"}
                     </span>
                   </td>
-                  {isAdmin && (
+                  {isStaff && (
                     <td className="px-6 py-4 flex items-center gap-3">
                       <EditRoomModal room={room} onUpdated={() => window.location.reload()} />
                       <DeleteRoomModal room={room} onDelete={() => window.location.reload()} />
@@ -53,7 +53,7 @@ export function RoomList({ initialRooms, role }: { initialRooms: any[]; role: st
               ))}
               {rooms.length === 0 && (
                 <tr>
-                  <td colSpan={isAdmin ? 6 : 5} className="px-6 py-4 text-center">
+                  <td colSpan={isStaff ? 6 : 5} className="px-6 py-4 text-center">
                     No rooms found.
                   </td>
                 </tr>

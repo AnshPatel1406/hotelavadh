@@ -117,18 +117,18 @@ export function BookingForm({ roomId, pricePerNight, maxGuests }: { roomId: stri
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Check-in Date</label>
+          <label className="block text-sm font-medium text-gray-700">Check-in Date & Time</label>
           <input
-            type="date"
+            type="datetime-local"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-900 focus:ring-gray-900 sm:text-sm p-2 border"
             value={checkIn}
             onChange={(e) => setCheckIn(e.target.value)}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Check-out Date</label>
+          <label className="block text-sm font-medium text-gray-700">Check-out Date & Time</label>
           <input
-            type="date"
+            type="datetime-local"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-900 focus:ring-gray-900 sm:text-sm p-2 border"
             value={checkOut}
             onChange={(e) => setCheckOut(e.target.value)}

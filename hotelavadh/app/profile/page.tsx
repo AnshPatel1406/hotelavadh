@@ -82,11 +82,11 @@ export default async function ProfilePage() {
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div className="flex items-center gap-2 text-gray-600">
                           <CalendarCheck className="h-4 w-4 text-[#0F5C5C]" />
-                          <span>Check-in: <strong>{new Date(booking.checkInDate).toLocaleDateString("en-IN", { dateStyle: "medium" })}</strong></span>
+                          <span>Check-in: <strong>{new Date(booking.checkInDate).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</strong></span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-600">
                           <CalendarCheck className="h-4 w-4 text-gray-400" />
-                          <span>Check-out: <strong>{new Date(booking.checkOutDate).toLocaleDateString("en-IN", { dateStyle: "medium" })}</strong></span>
+                          <span>Check-out: <strong>{new Date(booking.checkOutDate).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</strong></span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-600">
                           <BedDouble className="h-4 w-4 text-[#0F5C5C]" />
@@ -140,8 +140,8 @@ export default async function ProfilePage() {
                 <div>
                   <h3 className="font-semibold text-gray-900">{(booking.room as any)?.title}</h3>
                   <p className="text-sm text-gray-500">
-                    {new Date(booking.checkInDate).toLocaleDateString("en-IN", { dateStyle: "medium" })} →{" "}
-                    {new Date(booking.checkOutDate).toLocaleDateString("en-IN", { dateStyle: "medium" })}
+                    {new Date(booking.checkInDate).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })} →{" "}
+                    {new Date(booking.checkOutDate).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -166,8 +166,8 @@ export default async function ProfilePage() {
                   <div>
                     <h3 className="font-semibold text-gray-700">{(booking.room as any)?.title}</h3>
                     <p className="text-sm text-gray-400">
-                      {new Date(booking.checkInDate).toLocaleDateString("en-IN", { dateStyle: "medium" })} →{" "}
-                      {new Date(booking.checkOutDate).toLocaleDateString("en-IN", { dateStyle: "medium" })}
+                      {new Date(booking.checkInDate).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })} →{" "}
+                      {new Date(booking.checkOutDate).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
                     </p>
                   </div>
                   <span className={`rounded-full px-3 py-1 text-xs font-medium ${statusInfo.color}`}>
