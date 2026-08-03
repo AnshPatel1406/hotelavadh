@@ -73,6 +73,17 @@ export default function ProfileMenu() {
                 Profile
               </Link>
 
+              {((session.user as any)?.role === "admin" || (session.user as any)?.role === "reception") && (
+                <Link
+                  href="/dashboard"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-5 py-3 text-sm font-medium text-gray-800 transition hover:bg-gray-100"
+                >
+                  <LogOut className="rotate-180" size={18} />
+                  Dashboard
+                </Link>
+              )}
+
               <button
                 onClick={() => signOut()}
                 className="flex w-full items-center gap-3 px-5 py-3 text-left text-sm font-medium text-red-600 transition hover:bg-red-50"
