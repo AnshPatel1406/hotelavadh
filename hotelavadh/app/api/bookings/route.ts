@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import Room from "@/src/models/Room";
 import User from "@/src/models/User";
 import { CreateBookingSchema } from "@/src/schemas/CreateBookingSchema";
-// sddsf
+import { generateCheckInCode, generateQRCode } from "@/src/lib/checkin";
+import { sendBookingConfirmationEmail } from "@/src/lib/email";
+
 export async function GET() {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || !(session.user as any)?.id) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -30,7 +33,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || !(session.user as any)?.id) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -80,7 +83,10 @@ export async function POST(req: Request) {
     const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
     const totalPrice = nights * room.pricePerNight;
 
-    // Create Booking
+    // Generate check-in code and QR
+    const checkInCode = generateCheckInCode();
+
+    // Create Booking first to get the ID
     const booking = await Booking.create({
       user: (session.user as any).id,
       room: room._id,
@@ -89,17 +95,41 @@ export async function POST(req: Request) {
       guests: result.data.guests,
       specialRequests: result.data.specialRequests,
       totalPrice,
-      status: "pending"
+      status: "pending",
+      checkInCode,
+      bookedBy: "user",
     });
 
+    // Generate QR with booking ID baked in
+    const qrDataUrl = await generateQRCode(booking._id.toString(), checkInCode);
+    booking.qrData = qrDataUrl;
+    await booking.save();
+
     // Push booking ID to user
-    await User.findByIdAndUpdate((session.user as any).id, {
-      $push: { bookings: booking._id }
-    });
+    const user = await User.findByIdAndUpdate(
+      (session.user as any).id,
+      { $push: { bookings: booking._id } },
+      { new: true }
+    );
+
+    // Send confirmation email (non-blocking — don't fail the booking if email fails)
+    if (user?.email) {
+      sendBookingConfirmationEmail({
+        guestEmail: user.email,
+        guestName: user.name || "Guest",
+        bookingId: booking._id.toString(),
+        roomTitle: room.title,
+        checkInDate: checkIn.toLocaleDateString("en-IN", { dateStyle: "long" }),
+        checkOutDate: checkOut.toLocaleDateString("en-IN", { dateStyle: "long" }),
+        guests: result.data.guests,
+        checkInCode,
+        qrDataUrl,
+      }).catch((err) => console.error("Email send failed:", err));
+    }
 
     return NextResponse.json({ success: true, booking }, { status: 201 });
   } catch (error) {
     console.error("POST BOOKING ERROR:", error);
     return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
   }
-}
+}
