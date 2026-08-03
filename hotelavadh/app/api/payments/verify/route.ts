@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     ]);
 
     if (user?.email && room) {
-      sendBookingConfirmationEmail({
+      await sendBookingConfirmationEmail({
         guestEmail: user.email,
         guestName: user.name || "Guest",
         bookingId: booking._id.toString(),
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
         guests: booking.guests,
         checkInCode: booking.checkInCode,
         qrDataUrl: booking.qrData,
-      }).catch((err) => console.error("Payment verify email failed:", err));
+      });
     }
 
     return NextResponse.json({ success: true, message: "Payment verified successfully", payment });

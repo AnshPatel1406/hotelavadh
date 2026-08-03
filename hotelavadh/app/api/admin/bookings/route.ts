@@ -113,8 +113,8 @@ export async function POST(req: Request) {
     // Link to user
     await User.findByIdAndUpdate(linkedUser._id, { $push: { bookings: booking._id } });
 
-    // Send email (non-blocking)
-    sendBookingConfirmationEmail({
+    // Send email (must await on Vercel)
+    await sendBookingConfirmationEmail({
       guestEmail: guestEmail.toLowerCase(),
       guestName,
       bookingId: booking._id.toString(),
@@ -124,7 +124,7 @@ export async function POST(req: Request) {
       guests,
       checkInCode,
       qrDataUrl,
-    }).catch((err) => console.error("Admin booking email failed:", err));
+    });
 
     return NextResponse.json({ success: true, booking }, { status: 201 });
   } catch (error) {
