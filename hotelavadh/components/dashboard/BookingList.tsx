@@ -58,8 +58,8 @@ export function BookingList({ initialBookings, rooms, role }: { initialBookings:
                     <p className="text-xs text-gray-500">{booking.user?.email}</p>
                   </td>
                   <td className="px-6 py-4">{booking.room?.title}</td>
-                  <td className="px-6 py-4">{new Date(booking.checkInDate).toLocaleDateString()}</td>
-                  <td className="px-6 py-4">{new Date(booking.checkOutDate).toLocaleDateString()}</td>
+                  <td className="px-6 py-4">{new Date(booking.checkInDate).toLocaleDateString("en-IN")}</td>
+                  <td className="px-6 py-4">{new Date(booking.checkOutDate).toLocaleDateString("en-IN")}</td>
                   <td className="px-6 py-4 capitalize">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       booking.status === "confirmed" ? "bg-green-100 text-green-800" :
