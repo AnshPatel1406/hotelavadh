@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
+import { BookingForm } from "@/components/site/BookingForm";
 export default async function RoomDetailsPage({
   params,
 }: {
@@ -37,12 +37,14 @@ export default async function RoomDetailsPage({
             <div className="text-sm text-muted-foreground">Max Guests</div>
             <div className="text-lg font-semibold">{room.maxGuests}</div>
           </div>
-          <div className="flex md:justify-end">
-            <Button className="w-full md:w-auto">
-              Book Now (later)
-            </Button>
+          <div className="md:col-span-1">
+            <BookingForm 
+              roomId={room._id} 
+              pricePerNight={room.pricePerNight} 
+              maxGuests={room.maxGuests} 
+            />
           </div>
-        </CardContent>
+          </CardContent>
       </Card>
 
       <div className="space-y-2">
