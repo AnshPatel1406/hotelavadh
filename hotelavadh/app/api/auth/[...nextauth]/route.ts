@@ -165,7 +165,7 @@ const handler = NextAuth({
         async session({ session, token }) {
 
     (session as any).user.id = token.id as string;
-    (session as any).user.role = token.role as "admin" | "user";
+    (session as any).user.role = token.role as "admin" | "user" | "reception";
 
     return session;
 },

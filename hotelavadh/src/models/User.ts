@@ -5,7 +5,7 @@ export interface IUser extends Document {
   phone?: string;
   email?: string;
   password?: string;
-  role: "admin" | "user";
+  role: "admin" | "user" | "reception";
   createdAt: Date;
   updatedAt: Date;
   bookings?: mongoose.Types.ObjectId[];
@@ -30,7 +30,7 @@ const userSchema = new Schema<IUser>(
       default: "",
     },
     password: { type: String , select: false }, // Do not return password by default
-    role: { type: String, enum: ["admin", "user"], default: "user" },
+    role: { type: String, enum: ["admin", "user", "reception"], default: "user" },
     bookings: [{ type: Schema.Types.ObjectId, ref: "Booking" }],
     provider: {
       type: String,
