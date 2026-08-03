@@ -4,27 +4,23 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-      return NextResponse.json({
-    success: true,
-    message: "Demo Rooms API working",
-  });
-    // // Connect MongoDB
-    // await connectToDatabase();
+    // Connect MongoDB
+    await connectToDatabase();
 
-    // // Fetch only active rooms
-    // // Sort by room number ascending
-    // const rooms = await Room.find({
-    //   isActive: true,
-    // }).sort({
-    //   roomNumber: 1,
-    // });
+    // Fetch only active rooms
+    // Sort by room number ascending
+    const rooms = await Room.find({
+      isActive: true,
+    }).sort({
+      roomNumber: 1,
+    });
 
-    // // Return rooms data
-    // return Response.json({
-    //   success: true,
-    //   count: rooms.length,
-    //   rooms,
-    // });
+    // Return rooms data
+    return NextResponse.json({
+      success: true,
+      count: rooms.length,
+      rooms,
+    });
 
   } catch (error) {
 
