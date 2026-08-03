@@ -5,7 +5,7 @@ import Booking from "@/src/models/Bookings";
 import Room from "@/src/models/Room";
 import User from "@/src/models/User";
 import { CreateBookingSchema } from "@/src/schemas/CreateBookingSchema";
-
+// sddsf
 export async function GET() {
   try {
     const session = await getServerSession();
@@ -14,7 +14,7 @@ export async function GET() {
     }
 
     await connectToDatabase();
-    
+
     // Fetch bookings for the logged-in user, populate room details
     const bookings = await Booking.find({ user: (session.user as any).id })
       .populate("room", "title type pricePerNight images")
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     // Check for conflicting bookings for this room
     const checkIn = new Date(result.data.checkInDate);
     const checkOut = new Date(result.data.checkOutDate);
-    
+
     const conflictingBooking = await Booking.findOne({
       room: room._id,
       status: { $in: ["confirmed", "checked_in"] },
