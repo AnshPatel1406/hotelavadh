@@ -40,13 +40,14 @@ export async function GET(
 
 import { UpdateRoomSchemaAdmin } from "@/src/schemas/UpdateRoomSchemaAdmin";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || (session.user as any).role !== "admin") {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 403 });
     }
@@ -101,7 +102,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || (session.user as any).role !== "admin") {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 403 });
     }

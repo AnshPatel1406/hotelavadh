@@ -33,10 +33,11 @@ export async function GET() {
 
 import { CreateRoomSchemaAdmin } from "@/src/schemas/CreateRoomSchemaAdmin";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || (session.user as any).role !== "admin") {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 403 });
     }
