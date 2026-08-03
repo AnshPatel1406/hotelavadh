@@ -6,16 +6,15 @@ import Payment from "@/src/models/Payments";
 import Booking from "@/src/models/Bookings";
 import mongoose from "mongoose";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID as string,
-  key_secret: process.env.RAZORPAY_KEY_SECRET as string,
-});
-
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID as string,
+      key_secret: process.env.RAZORPAY_KEY_SECRET as string,
+    });
     const session = await getServerSession();
     if (!session || (session.user as any).role !== "admin") {
       // Refunds are usually admin-only for safety

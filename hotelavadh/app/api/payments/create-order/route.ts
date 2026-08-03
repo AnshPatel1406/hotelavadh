@@ -5,13 +5,12 @@ import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import { CreatePaymentSchema } from "@/src/schemas/CreatePaymentSchema";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID as string,
-  key_secret: process.env.RAZORPAY_KEY_SECRET as string,
-});
-
 export async function POST(req: Request) {
   try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID as string,
+      key_secret: process.env.RAZORPAY_KEY_SECRET as string,
+    });
     const session = await getServerSession();
     if (!session || !(session.user as any)?.id) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
