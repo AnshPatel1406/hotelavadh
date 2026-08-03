@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Search, XCircle, Undo2, CheckCircle2 } from "lucide-react";
+import { Search, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AddBookingModal } from "@/components/dashboard/AddBookingModal";
 
-export function BookingList({ initialBookings, role }: { initialBookings: any[]; role: string }) {
+export function BookingList({ initialBookings, rooms, role }: { initialBookings: any[]; rooms: any[]; role: string }) {
   const [bookings, setBookings] = useState(initialBookings);
   const [searchTerm, setSearchTerm] = useState("");
   const isAdmin = role === "admin";
+  const isStaff = role === "admin" || role === "reception";
 
   const handleCancel = async (bookingId: string) => {
     if (!confirm("Are you sure you want to cancel this booking?")) return;
@@ -32,9 +34,11 @@ export function BookingList({ initialBookings, role }: { initialBookings: any[];
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-center justify-between gap-3 flex-wrap">
         <CardTitle>Manage Bookings</CardTitle>
-        <div className="relative w-64">
+        <div className="flex items-center gap-3">
+          {isStaff && <AddBookingModal rooms={rooms} onCreated={() => window.location.reload()} />}
+          <div className="relative w-64">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
           <input
             type="text"
@@ -43,6 +47,7 @@ export function BookingList({ initialBookings, role }: { initialBookings: any[];
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          </div>
         </div>
       </CardHeader>
       <CardContent>
