@@ -42,7 +42,7 @@ export async function PATCH(req: Request) {
 
     if (!result.success) {
       return NextResponse.json(
-        { success: false, message: "Validation error", errors: result.error.errors },
+        { success: false, message: "Validation error", errors: result.error.issues },
         { status: 400 }
       );
     }
