@@ -55,8 +55,8 @@ export default function Navbar() {
             </div>
 
             {/* Optional right side (you can add socials later) */}
-           <div className="hidden sm:flex items-center ml-auto gap-5">
-  <span className="text-xs tracking-[0.15em] text-white">
+           <div className="flex items-center ml-auto gap-5">
+  <span className="hidden sm:inline text-xs tracking-[0.15em] text-white">
     Premium Hospitality
   </span>
 
@@ -81,7 +81,7 @@ export default function Navbar() {
   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[48%] z-20"
   aria-label="Go to Home"
 >
-  <div className="relative w-[180px] h-[200px] md:w-[160px] md:h-[170px]">
+  <div className="relative w-[110px] h-[120px] md:w-[160px] md:h-[170px]">
     <Image
       src="/logo.png"
       alt="Hotel Avadh"
