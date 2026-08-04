@@ -5,13 +5,15 @@ import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import { CreatePaymentSchema } from "@/src/schemas/CreatePaymentSchema";
 
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 export async function POST(req: Request) {
   try {
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID as string,
       key_secret: process.env.RAZORPAY_KEY_SECRET as string,
     });
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session || !(session.user as any)?.id) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -53,6 +55,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, order });
   } catch (error) {
     console.error("CREATE RAZORPAY ORDER ERROR:", error);
-    return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ success: false, message: error instanceof Error ? error.message : "Internal server error" }, { status: 500 });
   }
 }
