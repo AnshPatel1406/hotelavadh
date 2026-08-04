@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddBookingModal } from "@/components/dashboard/AddBookingModal";
 import { CancelBookingModal } from "@/components/dashboard/CancelBookingModal";
 import { CheckOutBookingModal } from "@/components/dashboard/CheckOutBookingModal";
+import { CheckInBookingModal } from "@/components/dashboard/CheckInBookingModal";
 
 export function BookingList({ initialBookings, rooms, role }: { initialBookings: any[]; rooms: any[]; role: string }) {
   const [bookings, setBookings] = useState(initialBookings);
@@ -64,6 +65,7 @@ export function BookingList({ initialBookings, rooms, role }: { initialBookings:
                   <td className="px-6 py-4 capitalize">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       booking.status === "confirmed" ? "bg-green-100 text-green-800" :
+                      booking.status === "checked_in" ? "bg-blue-100 text-blue-800" :
                       booking.status === "checked_out" ? "bg-gray-100 text-gray-800" :
                       booking.status === "cancelled" ? "bg-red-100 text-red-800" :
                       "bg-yellow-100 text-yellow-800"
@@ -72,6 +74,9 @@ export function BookingList({ initialBookings, rooms, role }: { initialBookings:
                     </span>
                   </td>
                   <td className="px-6 py-4 flex items-center gap-3">
+                    {booking.status === "confirmed" && isStaff && (
+                      <CheckInBookingModal booking={booking} onCheckedIn={() => window.location.reload()} />
+                    )}
                     {(booking.status === "confirmed" || booking.status === "checked_in") && isStaff && (
                       <CheckOutBookingModal booking={booking} onCompleted={() => window.location.reload()} />
                     )}
