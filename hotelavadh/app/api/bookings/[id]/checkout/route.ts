@@ -29,7 +29,7 @@ export async function PATCH(
       return NextResponse.json({ success: false, message: "Booking not found" }, { status: 404 });
     }
 
-    if (booking.status !== "checked_in") {
+    if (booking.status !== "checked_in" && booking.status !== "confirmed") {
       return NextResponse.json(
         { success: false, message: `Cannot check out: booking is currently '${booking.status}'` },
         { status: 400 }
