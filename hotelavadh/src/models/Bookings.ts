@@ -15,6 +15,7 @@ export interface IBooking extends Document {
   guestEmail?: string;         // For walk-in bookings without a user account
   guestName?: string;          // For walk-in bookings without a user account
   bookedBy: "user" | "admin" | "reception"; // Who created this booking
+  extraCharges: { description: string; amount: number; date: Date }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,6 +43,13 @@ const bookingsSchema = new Schema<IBooking>(
       enum: ["user", "admin", "reception"],
       default: "user",
     },
+    extraCharges: [
+      {
+        description: { type: String, required: true },
+        amount: { type: Number, required: true },
+        date: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );

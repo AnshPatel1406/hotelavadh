@@ -4,9 +4,11 @@ import { useState } from "react";
 import { Search, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddBookingModal } from "@/components/dashboard/AddBookingModal";
-import { CancelBookingModal } from "@/components/dashboard/CancelBookingModal";
 import { CheckOutBookingModal } from "@/components/dashboard/CheckOutBookingModal";
 import { CheckInBookingModal } from "@/components/dashboard/CheckInBookingModal";
+import { AddChargeModal } from "@/components/dashboard/AddChargeModal";
+import { ReceiptModal } from "@/components/dashboard/ReceiptModal";
+import { CancelBookingModal } from "@/components/dashboard/CancelBookingModal";
 
 export function BookingList({ initialBookings, rooms, role }: { initialBookings: any[]; rooms: any[]; role: string }) {
   const [bookings, setBookings] = useState(initialBookings);
@@ -77,8 +79,14 @@ export function BookingList({ initialBookings, rooms, role }: { initialBookings:
                     {booking.status === "confirmed" && isStaff && (
                       <CheckInBookingModal booking={booking} onCheckedIn={() => window.location.reload()} />
                     )}
+                    {booking.status === "checked_in" && isStaff && (
+                      <AddChargeModal booking={booking} onAdded={() => window.location.reload()} />
+                    )}
                     {(booking.status === "confirmed" || booking.status === "checked_in") && isStaff && (
                       <CheckOutBookingModal booking={booking} onCompleted={() => window.location.reload()} />
+                    )}
+                    {(booking.status === "checked_in" || booking.status === "checked_out") && (
+                      <ReceiptModal booking={booking} />
                     )}
                     {booking.status === "confirmed" && isStaff && (
                       <CancelBookingModal booking={booking} onCanceled={() => window.location.reload()} />
