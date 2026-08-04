@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, BedDouble, CalendarCheck, LogOut, User as UserIcon } from "lucide-react";
+import { LayoutDashboard, BedDouble, CalendarCheck, LogOut, User as UserIcon, BarChart3 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 export function Sidebar() {
@@ -15,6 +15,7 @@ export function Sidebar() {
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
     { name: "Rooms", href: "/dashboard/rooms", icon: BedDouble },
     { name: "Bookings", href: "/dashboard/bookings", icon: CalendarCheck },
+    { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
   ];
 
   return (
