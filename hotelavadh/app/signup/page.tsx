@@ -24,11 +24,23 @@ export default function SignupPage() {
   const [msg, setMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const passwordTooShort = password.length > 0 && password.length < 6;
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (e: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(e);
+  };
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
     setMsg("");
+    setEmailError("");
+    
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+
     setLoading(true);
 
     const res = await fetch("/api/auth/register", {
@@ -169,15 +181,21 @@ export default function SignupPage() {
                     <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                     <input
                       id="email"
-                      type="email"
+                      type="text"
                       autoComplete="email"
                       required
                       className="w-full rounded-lg border border-input bg-background py-2.5 pl-10 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-ring/40"
                       placeholder="you@example.com"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (emailError) setEmailError("");
+                      }}
                     />
                   </div>
+                  {emailError && (
+                    <p className="text-xs text-destructive mt-1">{emailError}</p>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
@@ -194,9 +212,8 @@ export default function SignupPage() {
                       type={showPassword ? "text" : "password"}
                       autoComplete="new-password"
                       required
-                      minLength={8}
                       className="w-full rounded-lg border border-input bg-background py-2.5 pl-10 pr-10 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-ring/40"
-                      placeholder="At least 6 characters"
+                      placeholder="Enter a secure password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -213,11 +230,6 @@ export default function SignupPage() {
                       )}
                     </button>
                   </div>
-                  {passwordTooShort ? (
-                    <p className="text-xs text-destructive">
-                      Password must be at least 8 characters.
-                    </p>
-                  ) : null}
                 </div>
 
                 {msg && !success ? (
@@ -228,7 +240,7 @@ export default function SignupPage() {
 
                 <Button
                   type="submit"
-                  disabled={loading || passwordTooShort}
+                  disabled={loading}
                   size="lg"
                   className="group w-full justify-center gap-2 py-5"
                 >

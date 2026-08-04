@@ -10,8 +10,14 @@ export async function POST(req: Request) {
     const email = String(body.email || "").toLowerCase().trim();
     const password = String(body.password || "");
 
-    if (!name || !email || password.length < 6) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!name || !email || !password) {
       return NextResponse.json({ success: false, message: "Invalid input" }, { status: 400 });
+    }
+
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ success: false, message: "Invalid email format" }, { status: 400 });
     }
  
     await connectToDatabase();
