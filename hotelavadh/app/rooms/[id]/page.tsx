@@ -2,6 +2,10 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookingForm } from "@/components/site/BookingForm";
+import connectToDatabase from "@/src/lib/mongodb";
+import Room from "@/src/models/Room";
+import mongoose from "mongoose";
+
 export default async function RoomDetailsPage({
   params,
 }: {
@@ -9,12 +13,14 @@ export default async function RoomDetailsPage({
 }) {
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:3000/api/rooms/${id}`, { cache: "no-store" });
-  const data = await res.json();
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return <div className="py-10 text-center">Invalid room ID</div>;
+  }
 
-  if (!data.success) return <div className="py-10">Room not found</div>;
+  await connectToDatabase();
+  const room = await Room.findById(id).lean() as any;
 
-  const room = data.room;
+  if (!room) return <div className="py-10 text-center">Room not found</div>;
 
   return (
     <div className="space-y-6">
@@ -39,7 +45,7 @@ export default async function RoomDetailsPage({
           </div>
           <div className="md:col-span-1">
             <BookingForm 
-              roomId={room._id} 
+              roomId={room._id.toString()} 
               pricePerNight={room.pricePerNight} 
               maxGuests={room.maxGuests} 
             />
