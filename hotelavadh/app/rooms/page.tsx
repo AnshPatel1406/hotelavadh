@@ -21,6 +21,8 @@ const typeAccentStyle: Record<string, string> = {
   premium: "from-amber-50 to-stone-50",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function RoomsPage() {
   await connectToDatabase();
   const dbRooms = await Room.find({ isActive: true }).sort({ roomNumber: 1 }).lean();

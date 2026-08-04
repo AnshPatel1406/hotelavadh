@@ -6,6 +6,8 @@ import connectToDatabase from "@/src/lib/mongodb";
 import Room from "@/src/models/Room";
 import mongoose from "mongoose";
 
+export const dynamic = "force-dynamic";
+
 export default async function RoomDetailsPage({
   params,
 }: {
