@@ -2,49 +2,41 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Users, BedDouble } from "lucide-react";
 
-const rooms = [
-  {
-    id: "deluxe",
-    title: "Deluxe Room",
-    description: "Spacious and elegant room with city views and modern comforts.",
-    pricePerNight: 3500,
-    maxGuests: 3,
-    type: "deluxe",
-    roomNumber: 101,
-    amenities: ["King Bed", "City View", "Free Wi-Fi", "AC", "TV"],
-    accent: "from-stone-100 to-stone-50",
-  },
-  {
-    id: "premium",
-    title: "Premium Room",
-    description: "Well-appointed room with extra space, plush furnishings and premium amenities.",
-    pricePerNight: 4500,
-    maxGuests: 4,
-    type: "premium",
-    roomNumber: 202,
-    amenities: ["King Bed", "Pool View", "Free Wi-Fi", "AC", "TV", "Minibar"],
-    accent: "from-amber-50 to-stone-50",
-  },
-  {
-    id: "suite",
-    title: "Suite",
-    description: "Expansive suite with a separate seating lounge and luxurious finishing touches.",
-    pricePerNight: 6500,
-    maxGuests: 5,
-    type: "suite",
-    roomNumber: 303,
-    amenities: ["King Bed", "Lounge Area", "Panoramic View", "Jacuzzi", "Butler Service"],
-    accent: "from-yellow-50 to-amber-50",
-  },
-];
+import connectToDatabase from "@/src/lib/mongodb";
+import Room from "@/src/models/Room";
 
 const typeBadgeStyle: Record<string, string> = {
+  single: "border-stone-300 text-stone-700 bg-stone-50",
+  double: "border-amber-300 text-amber-700 bg-amber-50",
+  suite: "border-yellow-300 text-yellow-700 bg-yellow-50",
   deluxe: "border-stone-300 text-stone-700 bg-stone-50",
   premium: "border-amber-300 text-amber-700 bg-amber-50",
-  suite: "border-yellow-300 text-yellow-700 bg-yellow-50",
 };
 
-export default function RoomsPage() {
+const typeAccentStyle: Record<string, string> = {
+  single: "from-stone-100 to-stone-50",
+  double: "from-amber-50 to-stone-50",
+  suite: "from-yellow-50 to-amber-50",
+  deluxe: "from-stone-100 to-stone-50",
+  premium: "from-amber-50 to-stone-50",
+};
+
+export default async function RoomsPage() {
+  await connectToDatabase();
+  const dbRooms = await Room.find({ isActive: true }).sort({ roomNumber: 1 }).lean();
+
+  const rooms = dbRooms.map((r: any) => ({
+    id: r._id.toString(),
+    title: r.title,
+    description: r.description,
+    pricePerNight: r.pricePerNight,
+    maxGuests: r.maxGuests,
+    type: r.type,
+    roomNumber: r.roomNumber,
+    amenities: r.amenities || [],
+    accent: typeAccentStyle[r.type] || "from-stone-100 to-stone-50",
+  }));
+
   return (
     <div className="space-y-16">
 
@@ -75,9 +67,9 @@ export default function RoomsPage() {
       {/* ── ROOM CARDS ── */}
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {rooms.map((room, i) => (
-          <div
+          <Link
             key={room.id}
-            // href={`/rooms/${room.id}`}
+            href={`/rooms/${room.id}`}
             className="group relative flex flex-col rounded-3xl border border-border/60 bg-background overflow-hidden hover:border-foreground/20 hover:shadow-md transition-all duration-300"
           >
             {/* image placeholder with gradient tint */}
@@ -119,7 +111,7 @@ export default function RoomsPage() {
 
               {/* amenity pills */}
               <div className="flex flex-wrap gap-1.5">
-                {room.amenities.map((a) => (
+                {room.amenities.map((a: string) => (
                   <span
                     key={a}
                     className="rounded-full border border-border/50 bg-muted/30 px-2.5 py-0.5 text-[11px] text-muted-foreground"
@@ -146,7 +138,7 @@ export default function RoomsPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
