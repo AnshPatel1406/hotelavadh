@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
     if (!session || !(session.user as any)?.id) {
-      return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ success: false, message: "Please log in first to book a room" }, { status: 401 });
     }
 
     const body = await req.json();

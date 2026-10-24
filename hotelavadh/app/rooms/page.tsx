@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Users, BedDouble } from "lucide-react";
+import { Users, BedDouble, ArrowRight } from "lucide-react";
 
 import connectToDatabase from "@/src/lib/mongodb";
 import Room from "@/src/models/Room";
@@ -92,8 +92,8 @@ export default async function RoomsPage() {
                 </span>
               </div>
               {/* arrow on hover */}
-              <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-background/80 border border-border/60 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all duration-200">
-                
+              <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-background/90 border border-border/60 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all duration-200 shadow-sm">
+                <ArrowRight className="h-4 w-4 text-foreground/80" />
               </div>
             </div>
 
@@ -124,19 +124,26 @@ export default async function RoomsPage() {
               </div>
 
               {/* footer */}
-              <div className="mt-auto pt-4 border-t border-border/40 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                  <Users className="h-3.5 w-3.5" />
-                  <span>Up to {room.maxGuests} guests</span>
+              <div className="mt-auto pt-4 border-t border-border/40 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                    <Users className="h-3.5 w-3.5" />
+                    <span>Up to {room.maxGuests} guests</span>
+                  </div>
+                  <div className="text-right">
+                    <span
+                      className="text-xl font-light"
+                      style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                    >
+                      ₹{room.pricePerNight.toLocaleString("en-IN")}
+                    </span>
+                    <span className="text-xs text-muted-foreground"> /night</span>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span
-                    className="text-xl font-light"
-                    style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                  >
-                    ₹{room.pricePerNight.toLocaleString("en-IN")}
-                  </span>
-                  <span className="text-xs text-muted-foreground"> /night</span>
+
+                <div className="flex items-center justify-center gap-2 rounded-2xl bg-stone-900 py-2.5 px-4 text-xs font-medium text-white group-hover:bg-emerald-700 transition">
+                  <span>Select Dates & Book</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
             </div>
