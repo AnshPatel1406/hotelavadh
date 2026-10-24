@@ -39,14 +39,15 @@ export function CheckOutBookingModal({ booking, onCompleted }: { booking: any; o
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1 text-green-600 hover:text-green-900 transition-colors"
-        title="Complete Order (Check-out)"
+        className="inline-flex items-center gap-1 rounded-lg bg-stone-100 border border-stone-300 px-2.5 py-1 text-xs font-medium text-stone-800 hover:bg-stone-200 transition shadow-sm active:scale-95"
+        title="Check-out Guest & Finish Order"
       >
-        <CheckCircle className="h-4 w-4" /> <span className="text-xs">Complete Order</span>
+        <CheckCircle className="h-3.5 w-3.5 text-stone-700" />
+        <span>Check Out / Finish</span>
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
           <div className="w-full max-w-sm rounded-2xl bg-white shadow-2xl mx-4 overflow-hidden relative">
             
             {/* Header / Dismiss */}
@@ -54,13 +55,18 @@ export function CheckOutBookingModal({ booking, onCompleted }: { booking: any; o
                 <X className="h-5 w-5 text-gray-500" />
             </button>
 
-            <div className="p-6 text-center pt-10">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100 mb-4">
-                <CheckCircle className="h-6 w-6 text-green-600" />
+            <div className="p-6 text-center pt-8 space-y-3">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-stone-100 text-stone-800 mb-2">
+                <CheckCircle className="h-7 w-7" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900 mb-2">Complete Order?</h2>
-              <p className="text-sm text-gray-500">
-                Are you sure you want to mark the booking for <strong>{booking.user?.name}</strong> in <strong>{booking.room?.title}</strong> as complete (checked-out)?
+              <h2 className="text-xl font-bold text-gray-900">Check Out & Finish Order?</h2>
+
+              <div className="inline-block rounded-lg bg-stone-100 border border-stone-200 px-3 py-1 font-mono text-xs font-bold text-stone-800">
+                Ref: #{booking.checkInCode || (booking._id ? booking._id.toString().slice(-6).toUpperCase() : "")}
+              </div>
+
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Confirm check-out for <strong>{booking.user?.name || booking.guestName}</strong> in <strong>{booking.room?.title}</strong>. This will mark the booking status as <strong>Order Finished (Checked Out)</strong>.
               </p>
 
               {error && (

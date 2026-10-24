@@ -75,6 +75,22 @@ export function CheckInBookingModal({ booking, onCheckedIn }: { booking: any; on
                 Please enter the 6-character check-in code for <strong>{booking.user?.name}</strong> to verify their booking for <strong>{booking.room?.title}</strong>.
               </p>
 
+              <div className="flex items-center justify-between bg-blue-50/70 border border-blue-200/60 rounded-xl px-3.5 py-2.5 text-xs mb-3 text-left">
+                <div>
+                  <span className="text-gray-500 block text-[10px] uppercase font-medium">Guest Booking Reference</span>
+                  <span className="font-mono font-bold text-blue-900 text-sm">
+                    #{booking.checkInCode || (booking._id ? booking._id.toString().slice(-6).toUpperCase() : "")}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setCheckInCode(booking.checkInCode || (booking._id ? booking._id.toString().slice(-6).toUpperCase() : ""))}
+                  className="rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-medium text-white hover:bg-blue-700 transition shadow-sm"
+                >
+                  Auto-Fill
+                </button>
+              </div>
+
               <input
                 type="text"
                 placeholder="Enter 6-digit code"

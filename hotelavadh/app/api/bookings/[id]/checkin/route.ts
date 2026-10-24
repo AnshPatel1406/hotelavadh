@@ -44,7 +44,7 @@ export async function PATCH(
       return NextResponse.json({ success: false, message: "Booking not found" }, { status: 404 });
     }
 
-    if (booking.status !== "confirmed") {
+    if (booking.status !== "confirmed" && booking.status !== "pending") {
       return NextResponse.json(
         { success: false, message: `Cannot check in: booking is currently '${booking.status}'` },
         { status: 400 }
