@@ -45,23 +45,23 @@ export default function Navbar() {
         <div className="bg-[#0F5C5C] text-white">
           <div className="mx-auto max-w-6xl px-4 h-12 flex items-center justify-between text-sm">
             <div className="flex items-center gap-4">
-              <a className="hover:underline" href="tel:+919428504802">
+              {/* <a className="hover:underline" href="tel:+919428504802">
                 +91 94285 04802
-              </a>
-              <span className="opacity-50 hidden sm:inline">|</span>
+              </a> */}
+              {/* <span className="opacity-50 hidden sm:inline">|</span> */}
               <a className="hover:underline hidden sm:inline" href="mailto:info@hotelavadh.com">
                 info@hotelavadh.com
               </a>
             </div>
 
             {/* Optional right side (you can add socials later) */}
-           <div className="flex items-center ml-auto gap-5">
-  <span className="hidden sm:inline text-xs tracking-[0.15em] text-white">
-    Premium Hospitality
-  </span>
+            <div className="flex items-center ml-auto gap-5">
+              <span className="hidden sm:inline text-xs tracking-[0.15em] text-white">
+                Premium Hospitality
+              </span>
 
-  <ProfileMenu />
-</div>
+              <ProfileMenu />
+            </div>
           </div>
         </div>
 
@@ -77,20 +77,20 @@ export default function Navbar() {
 
             {/* CENTER LOGO (overlaps both strips) */}
             <Link
-  href="/"
-  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[48%] z-20"
-  aria-label="Go to Home"
->
-  <div className="relative w-[110px] h-[120px] md:w-[160px] md:h-[170px]">
-    <Image
-      src="/logo.png"
-      alt="Hotel Avadh"
-      fill
-      className="object-fill"
-      priority
-    />
-  </div>
-</Link>
+              href="/"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[48%] z-20"
+              aria-label="Go to Home"
+            >
+              <div className="relative w-[110px] h-[120px] md:w-[160px] md:h-[170px]">
+                <Image
+                  src="/logo.png"
+                  alt="Hotel Avadh"
+                  fill
+                  className="object-fill"
+                  priority
+                />
+              </div>
+            </Link>
 
             {/* RIGHT LINKS (Desktop) */}
             <nav className="hidden md:flex items-center gap-10">

@@ -35,6 +35,16 @@ export default function Footer() {
               <Link className="hover:underline" href="/banquet">Banquet</Link>
               <Link className="hover:underline" href="/gallery">Gallery</Link>
               <Link className="hover:underline" href="/contact">Contact</Link>
+
+              <Link
+                className="hover:underline"
+                href="https://www.google.com/maps/dir/?api=1&destination=23.7340702%2C72.9796102"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get Directions
+              </Link>
+
             </div>
           </div>
         </div>

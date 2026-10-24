@@ -1,6 +1,14 @@
-
 import { Badge } from "@/components/ui/badge";
-import { Phone, Mail, MapPin, MessageCircle, ExternalLink } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  MessageCircle,
+  ExternalLink,
+  ConciergeBell,
+  UtensilsCrossed,
+  PartyPopper,
+} from "lucide-react";
 
 const hotelName =
   "HOTEL AVADH, ROOMS,RESTAURANT,BREAKFAST, PARTY PLOTS";
@@ -10,8 +18,41 @@ const hotelCoordinates = "23.7340702,72.9796102";
 const directionsUrl =
   `https://www.google.com/maps/dir/?api=1&destination=${hotelCoordinates}`;
 
-const googleMapsUrl =
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotelName)}&query_place_id=ChIJfXkIeAC7XTlRr4KCRkMkJ0I`;
+const hours = [
+  {
+    label: "Front Desk",
+    hours: "Open 24 hours",
+    note: "Always here for you",
+    icon: ConciergeBell,
+    card: "border-teal-200 bg-teal-50/40 hover:bg-teal-50 hover:border-teal-300",
+    chip: "bg-teal-100 border-teal-200 text-teal-700",
+    labelColor: "text-teal-600/80",
+    hoursColor: "text-teal-900",
+    noteColor: "text-teal-700/70",
+  },
+  {
+    label: "Restaurant",
+    hours: "11 AM – 3:30 PM • 7 – 11 PM",
+    note: "Lunch & Dinner daily",
+    icon: UtensilsCrossed,
+    card: "border-amber-200 bg-amber-50/40 hover:bg-amber-50 hover:border-amber-300",
+    chip: "bg-amber-100 border-amber-200 text-amber-700",
+    labelColor: "text-amber-600/80",
+    hoursColor: "text-amber-900",
+    noteColor: "text-amber-700/70",
+  },
+  {
+    label: "Banquet Enquiries",
+    hours: "9 AM – 8 PM",
+    note: "Call or WhatsApp",
+    icon: PartyPopper,
+    card: "border-violet-200 bg-violet-50/40 hover:bg-violet-50 hover:border-violet-300",
+    chip: "bg-violet-100 border-violet-200 text-violet-700",
+    labelColor: "text-violet-600/80",
+    hoursColor: "text-violet-900",
+    noteColor: "text-violet-700/70",
+  },
+];
 
 export default function ContactPage() {
   return (
@@ -48,21 +89,21 @@ export default function ContactPage() {
           {/* Phone */}
           <a
             href="tel:+919428504802"
-            className="group flex items-start gap-4 rounded-2xl border border-border/60 bg-background px-5 py-5 hover:border-foreground/20 hover:bg-muted/20 transition"
+            className="group flex items-start gap-4 rounded-2xl border border-blue-200 bg-blue-50/40 px-5 py-5 hover:bg-blue-50 hover:border-blue-300 transition"
           >
-            <div className="shrink-0 h-10 w-10 rounded-xl bg-muted flex items-center justify-center border border-border/40">
-              <Phone className="h-4 w-4 text-foreground/70" />
+            <div className="shrink-0 h-10 w-10 rounded-xl bg-blue-100 flex items-center justify-center border border-blue-200">
+              <Phone className="h-4 w-4 text-blue-700" />
             </div>
             <div>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+              <div className="text-xs uppercase tracking-widest text-blue-600/70 mb-1">
                 Phone
               </div>
-              <div className="font-medium text-sm">+91 94285 4802</div>
-              <div className="text-xs text-muted-foreground mt-0.5">
+              {/* <div className="font-medium text-sm text-blue-900">+91 94285 4802</div> */}
+              <div className="text-xs text-blue-700/60 mt-0.5">
                 Available 8 AM – 10 PM
               </div>
             </div>
-            <span className="ml-auto self-center text-muted-foreground/40">→</span>
+            <span className="ml-auto self-center text-blue-400/60">→</span>
           </a>
 
           {/* WhatsApp */}
@@ -79,9 +120,6 @@ export default function ContactPage() {
               <div className="text-xs uppercase tracking-widest text-green-600/70 mb-1">
                 WhatsApp
               </div>
-              <div className="font-medium text-sm text-green-900">
-                +91 94285 4802
-              </div>
               <div className="text-xs text-green-700/60 mt-0.5">
                 Quick replies
               </div>
@@ -92,34 +130,38 @@ export default function ContactPage() {
           {/* Email */}
           <a
             href="mailto:info@hotelavadh.com"
-            className="group flex items-start gap-4 rounded-2xl border border-border/60 bg-background px-5 py-5 hover:border-foreground/20 hover:bg-muted/20 transition"
+            className="group flex items-start gap-4 rounded-2xl border border-orange-200 bg-orange-50/40 px-5 py-5 hover:bg-orange-50 hover:border-orange-300 transition"
           >
-            <div className="shrink-0 h-10 w-10 rounded-xl bg-muted flex items-center justify-center border border-border/40">
-              <Mail className="h-4 w-4 text-foreground/70" />
+            <div className="shrink-0 h-10 w-10 rounded-xl bg-orange-100 flex items-center justify-center border border-orange-200">
+              <Mail className="h-4 w-4 text-orange-700" />
             </div>
             <div>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+              <div className="text-xs uppercase tracking-widest text-orange-600/70 mb-1">
                 Email
               </div>
-              <div className="font-medium text-sm">info@hotelavadh.com</div>
-              <div className="text-xs text-muted-foreground mt-0.5">
+              <div className="font-medium text-sm text-orange-900">
+                info@hotelavadh.com
+              </div>
+              <div className="text-xs text-orange-700/60 mt-0.5">
                 We reply within 24 hours
               </div>
             </div>
-            <span className="ml-auto self-center text-muted-foreground/40">→</span>
+            <span className="ml-auto self-center text-orange-400/60">→</span>
           </a>
 
           {/* Address */}
-          <div className="flex items-start gap-4 rounded-2xl border border-border/60 bg-background px-5 py-5">
-            <div className="shrink-0 h-10 w-10 rounded-xl bg-muted flex items-center justify-center border border-border/40">
-              <MapPin className="h-4 w-4 text-foreground/70" />
+          <div className="flex items-start gap-4 rounded-2xl border border-rose-200 bg-rose-50/40 px-5 py-5">
+            <div className="shrink-0 h-10 w-10 rounded-xl bg-rose-100 flex items-center justify-center border border-rose-200">
+              <MapPin className="h-4 w-4 text-rose-700" />
             </div>
             <div>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
+              <div className="text-xs uppercase tracking-widest text-rose-600/70 mb-1">
                 Address
               </div>
-              <div className="font-medium text-sm">Hotel Avadh</div>
-              <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+              <div className="font-medium text-sm text-rose-900">
+                Hotel Avadh
+              </div>
+              <div className="text-xs text-rose-700/60 mt-0.5 leading-relaxed">
                 Himmatnagar, Sabarkantha
                 <br />
                 Gujarat, India
@@ -129,17 +171,18 @@ export default function ContactPage() {
         </div>
 
         {/* MAP */}
-        <div className="md:col-span-3 rounded-3xl border border-border/60 overflow-hidden bg-muted">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-background p-5 border-b border-border/60">
+        <div className="md:col-span-3 flex flex-col rounded-3xl border border-rose-200 overflow-hidden bg-muted">
+          {/* Map header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-rose-50/60 p-5 border-b border-rose-100">
             <div className="flex items-start gap-3">
-              <div className="h-10 w-10 shrink-0 rounded-xl bg-muted flex items-center justify-center">
-                <MapPin className="h-5 w-5" />
+              <div className="h-10 w-10 shrink-0 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center">
+                <MapPin className="h-5 w-5 text-rose-700" />
               </div>
               <div>
-                <h2 className="font-medium text-sm leading-relaxed">
+                <h2 className="font-semibold text-sm leading-relaxed text-rose-900">
                   {hotelName}
                 </h2>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-rose-700/70 mt-1">
                   Himmatnagar, Gujarat, India
                 </p>
               </div>
@@ -159,22 +202,23 @@ export default function ContactPage() {
 
           <iframe
             title="Hotel Avadh location on Google Maps"
-            className="block w-full h-[380px] md:h-[480px]"
+            className="block w-full flex-1 h-[300px] md:h-auto md:min-h-[200px]"
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
             src={`https://maps.google.com/maps?q=${hotelCoordinates}&z=17&output=embed`}
           />
 
-          <div className="bg-background p-4">
+          {/* Map footer link */}
+          <div className="bg-blue-50/50 border-t border-blue-100 p-4">
             <a
-              href={`https://maps.app.goo.gl/n6FiQP1z3TBKCb47A`}
+              href="https://maps.app.goo.gl/n6FiQP1z3TBKCb47A"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium underline underline-offset-4 hover:text-muted-foreground transition"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-blue-600 underline decoration-blue-300 underline-offset-4 hover:text-blue-800 hover:decoration-blue-600 transition-colors"
             >
               View Hotel Avadh on Google Maps
-              <ExternalLink className="h-3.5 w-3.5" />
+              <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </div>
         </div>
@@ -182,36 +226,34 @@ export default function ContactPage() {
 
       {/* HOURS */}
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
-        {[
-          {
-            label: "Front Desk",
-            hours: "Open 24 hours",
-            note: "Always here for you",
-          },
-          {
-            label: "Restaurant",
-            hours: "11 AM – 3:30 PM • 7 – 11 PM",
-            note: "Lunch & Dinner daily",
-          },
-          {
-            label: "Banquet Enquiries",
-            hours: "9 AM – 8 PM",
-            note: "Call or WhatsApp",
-          },
-        ].map((h) => (
-          <div
-            key={h.label}
-            className="rounded-2xl border border-border/50 bg-muted/20 px-5 py-4"
-          >
-            <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">
-              {h.label}
+        {hours.map((h) => {
+          const Icon = h.icon;
+          return (
+            <div
+              key={h.label}
+              className={`flex items-start gap-4 rounded-2xl border px-5 py-5 transition ${h.card}`}
+            >
+              <div
+                className={`shrink-0 h-10 w-10 rounded-xl border flex items-center justify-center ${h.chip}`}
+              >
+                <Icon className="h-4 w-4" />
+              </div>
+              <div>
+                <div
+                  className={`text-xs uppercase tracking-widest mb-1 ${h.labelColor}`}
+                >
+                  {h.label}
+                </div>
+                <div className={`font-medium text-sm ${h.hoursColor}`}>
+                  {h.hours}
+                </div>
+                <div className={`text-xs mt-0.5 ${h.noteColor}`}>
+                  {h.note}
+                </div>
+              </div>
             </div>
-            <div className="font-medium text-sm">{h.hours}</div>
-            <div className="text-xs text-muted-foreground mt-0.5">
-              {h.note}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* CTA */}
