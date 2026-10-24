@@ -18,6 +18,7 @@ import {
   ArrowRight,
   ShieldCheck,
 } from "lucide-react";
+import { generateWhatsAppBookingUrl } from "@/src/lib/whatsapp";
 
 interface BookingFormProps {
   roomId: string;
@@ -178,6 +179,7 @@ export function BookingForm({
           checkInDate: checkInIso,
           checkOutDate: checkOutIso,
           guests: Number(guests),
+          phone: phone.trim() || undefined,
           specialRequests: combinedNotes || undefined,
         }),
       });
@@ -207,53 +209,22 @@ export function BookingForm({
     }
 
     // 4. Construct WhatsApp Message for Hotel Admin (+91 94285 04802)
-    const guestName = session?.user?.name || "Valued Guest";
-    const guestEmail = session?.user?.email || "Provided on account";
-    const guestPhone = phone.trim() || "Available via WhatsApp";
-
-    const lines = [
-      "🏨 *HOTEL AVADH - ROOM RESERVATION REQUEST*",
-      "━━━━━━━━━━━━━━━━━━━━━━━━━━",
-      "",
-      "👤 *GUEST INFORMATION*",
-      `• *Name:* ${guestName}`,
-      `• *Email:* ${guestEmail}`,
-      `• *Phone:* ${guestPhone}`,
-      "",
-      "🛏️ *ROOM DETAILS*",
-      `• *Room:* ${roomTitle}`,
-      roomNumber ? `• *Room No:* #${roomNumber}` : "",
-      `• *Type:* ${roomType.toUpperCase()}`,
-      `• *Rate:* ₹${pricePerNight.toLocaleString("en-IN")} / night`,
-      "",
-      "📅 *STAY DATES*",
-      `• *Check-in:* ${formatDisplayDate(checkIn)} (From 12:00 PM)`,
-      `• *Check-out:* ${formatDisplayDate(checkOut)} (By 11:00 AM)`,
-      `• *Duration:* ${nights} ${nights === 1 ? "Night" : "Nights"}`,
-      `• *Guests:* ${guests} ${guests === 1 ? "Guest" : "Guests"}`,
-      "",
-      "💰 *TOTAL ESTIMATE*",
-      `• *Amount:* ₹${totalPrice.toLocaleString("en-IN")} (Payable upon confirmation)`,
-      "",
-    ];
-
-    if (specialRequests.trim()) {
-      lines.push("📝 *SPECIAL REQUESTS*", `• ${specialRequests.trim()}`, "");
-    }
-
-    if (createdBookingRef) {
-      lines.push(`🔖 *BOOKING REFERENCE:* #${createdBookingRef}`, "");
-    }
-
-    lines.push(
-      "━━━━━━━━━━━━━━━━━━━━━━━━━━",
-      "Hello Hotel Avadh Team! 👋",
-      "I would like to confirm this room reservation. Please contact me regarding room availability and payment details. Thank you!"
-    );
-
-    const message = lines.filter((l) => l !== "").join("\n");
-    const adminPhone = "919428504802"; // +91 94285 04802
-    const targetUrl = `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
+    const targetUrl = generateWhatsAppBookingUrl({
+      guestName: session?.user?.name || "Valued Guest",
+      guestEmail: session?.user?.email || "Provided on account",
+      guestPhone: phone.trim() || "Available via WhatsApp",
+      roomTitle,
+      roomNumber,
+      roomType,
+      pricePerNight,
+      checkInDate: checkIn,
+      checkOutDate: checkOut,
+      nights,
+      guests,
+      totalPrice,
+      bookingRef: createdBookingRef || undefined,
+      specialRequests: specialRequests.trim() || undefined,
+    });
 
     setWhatsappSentUrl(targetUrl);
 

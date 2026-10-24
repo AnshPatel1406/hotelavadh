@@ -3,6 +3,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
+import User from "@/src/models/User";
+import { generateWhatsAppBookingUrl } from "@/src/lib/whatsapp";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -54,6 +56,10 @@ export default async function ProfilePage() {
   if (!session?.user) redirect("/login");
 
   await connectToDatabase();
+
+  const userRecord = await User.findById((session.user as any).id)
+    .select("name email phone")
+    .lean();
 
   const bookings = await Booking.find({ user: (session.user as any).id })
     .populate("room", "title type roomNumber pricePerNight")
@@ -122,9 +128,49 @@ export default async function ProfilePage() {
                 booking.checkInCode ||
                 (booking._id ? booking._id.toString().slice(-6).toUpperCase() : "AVADH");
 
-              const whatsappUrl = `https://wa.me/919428504802?text=${encodeURIComponent(
-                `Hello Hotel Avadh Team! My Booking Reference ID is #${refCode} for ${(booking.room as any)?.title || "Room"}. I would like to confirm my reservation and payment. Thank you!`
-              )}`;
+              const specialRequestsPhone = booking.specialRequests?.match(
+                /Guest Phone:\s*([^\r\n]+)/i
+              )?.[1]?.trim();
+
+              const guestPhone =
+                booking.guestPhone ||
+                specialRequestsPhone ||
+                userRecord?.phone ||
+                "Available via WhatsApp";
+
+              const nights = Math.max(
+                1,
+                Math.round(
+                  (new Date(booking.checkOutDate).getTime() -
+                    new Date(booking.checkInDate).getTime()) /
+                    (1000 * 60 * 60 * 24)
+                )
+              );
+
+              const whatsappUrl = generateWhatsAppBookingUrl({
+                guestName:
+                  booking.guestName ||
+                  session.user?.name ||
+                  userRecord?.name ||
+                  "Valued Guest",
+                guestEmail:
+                  booking.guestEmail ||
+                  session.user?.email ||
+                  userRecord?.email ||
+                  "Provided on account",
+                guestPhone,
+                roomTitle: (booking.room as any)?.title || "Avadh Room",
+                roomNumber: (booking.room as any)?.roomNumber,
+                roomType: (booking.room as any)?.type,
+                pricePerNight: (booking.room as any)?.pricePerNight,
+                checkInDate: booking.checkInDate,
+                checkOutDate: booking.checkOutDate,
+                nights,
+                guests: booking.guests || 1,
+                totalPrice: booking.totalPrice,
+                bookingRef: refCode,
+                specialRequests: booking.specialRequests,
+              });
 
               return (
                 <div

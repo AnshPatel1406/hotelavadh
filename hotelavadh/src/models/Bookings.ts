@@ -14,6 +14,7 @@ export interface IBooking extends Document {
   qrData: string;              // Base64 QR image or URL
   guestEmail?: string;         // For walk-in bookings without a user account
   guestName?: string;          // For walk-in bookings without a user account
+  guestPhone?: string;         // Contact phone for guest
   bookedBy: "user" | "admin" | "reception"; // Who created this booking
   extraCharges: { description: string; amount: number; date: Date }[];
   createdAt: Date;
@@ -38,6 +39,7 @@ const bookingsSchema = new Schema<IBooking>(
     qrData: { type: String, default: "" },
     guestEmail: { type: String, trim: true },
     guestName: { type: String, trim: true },
+    guestPhone: { type: String, trim: true },
     bookedBy: {
       type: String,
       enum: ["user", "admin", "reception"],

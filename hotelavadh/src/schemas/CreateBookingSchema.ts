@@ -5,6 +5,7 @@ export const CreateBookingSchema = z.object({
   checkInDate: z.string().datetime({ message: "Invalid check-in date" }),
   checkOutDate: z.string().datetime({ message: "Invalid check-out date" }),
   guests: z.number().int().min(1, "At least 1 guest required"),
+  phone: z.string().optional(),
   specialRequests: z.string().optional(),
 }).refine(data => {
   return new Date(data.checkInDate) < new Date(data.checkOutDate);

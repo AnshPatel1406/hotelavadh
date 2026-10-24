@@ -73,12 +73,15 @@ export async function POST(req: Request) {
     const checkInCode = generateCheckInCode();
 
     // Create Booking first to get the ID
+    const guestPhone = result.data.phone?.trim() || undefined;
+
     const booking = await Booking.create({
       user: (session.user as any).id,
       room: room._id,
       checkInDate: checkIn,
       checkOutDate: checkOut,
       guests: result.data.guests,
+      guestPhone,
       specialRequests: result.data.specialRequests,
       totalPrice,
       status: "pending",
@@ -91,12 +94,16 @@ export async function POST(req: Request) {
     booking.qrData = qrDataUrl;
     await booking.save();
 
-    // Push booking ID to user
-    const user = await User.findByIdAndUpdate(
-      (session.user as any).id,
-      { $push: { bookings: booking._id } },
-      { new: true }
-    );
+    // Push booking ID to user & store phone if missing
+    const user = await User.findById((session.user as any).id);
+    if (user) {
+      user.bookings = user.bookings || [];
+      user.bookings.push(booking._id as any);
+      if (!user.phone && guestPhone) {
+        user.phone = guestPhone;
+      }
+      await user.save();
+    }
 
     // Send confirmation email (non-blocking — don't fail the booking if email fails)
     if (user?.email) {
