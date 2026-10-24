@@ -106,7 +106,7 @@ export default function ContactPage() {
             title="Hotel Avadh on Google Maps"
             className="w-full h-full min-h-[380px]"
             loading="lazy"
-            src="https://www.google.com/maps?q=Hotel%20Avadh%20Himmatnagar&output=embed"
+            src="https://www.google.com/maps?q=23.7340702,72.9796102&output=embed"
           />
         </div>
       </div>
