@@ -126,6 +126,21 @@ export function BookingForm({
       return;
     }
 
+    // 3. Validate contact phone (REQUIRED)
+    const trimmedPhone = phone.trim();
+    if (!trimmedPhone) {
+      setErrorMessage("Please enter your WhatsApp / contact phone number to proceed.");
+      document.getElementById("booking-phone")?.focus();
+      return;
+    }
+
+    const digitsOnly = trimmedPhone.replace(/\D/g, "");
+    if (digitsOnly.length < 10) {
+      setErrorMessage("Please enter a valid phone number (at least 10 digits).");
+      document.getElementById("booking-phone")?.focus();
+      return;
+    }
+
     setLoading(true);
 
     let createdBookingRef: string | null = null;
@@ -504,9 +519,16 @@ export function BookingForm({
                 setPhone(e.target.value);
                 setErrorMessage(null);
               }}
-              aria-invalid={Boolean(errorMessage)}
-              className="w-full rounded-2xl border border-stone-200 bg-stone-50/50 px-3.5 py-2.5 text-sm text-stone-900 outline-none transition focus:border-stone-900 focus:bg-white focus:ring-1 focus:ring-stone-900 placeholder:text-stone-400"
+              aria-invalid={Boolean(errorMessage && errorMessage.toLowerCase().includes("phone"))}
+              className={`w-full rounded-2xl border px-3.5 py-2.5 text-sm text-stone-900 outline-none transition placeholder:text-stone-400 ${
+                errorMessage && errorMessage.toLowerCase().includes("phone")
+                  ? "border-rose-400 bg-rose-50/40 ring-1 ring-rose-400 focus:border-rose-500 focus:ring-rose-500"
+                  : "border-stone-200 bg-stone-50/50 focus:border-stone-900 focus:bg-white focus:ring-1 focus:ring-stone-900"
+              }`}
             />
+            {errorMessage && errorMessage.toLowerCase().includes("phone") && (
+              <p className="mt-1 text-xs text-rose-600 font-medium">{errorMessage}</p>
+            )}
           </div>
 
 
