@@ -98,7 +98,7 @@ export default function ContactPage() {
               <div className="text-xs uppercase tracking-widest text-blue-600/70 mb-1">
                 Phone
               </div>
-              {/* <div className="font-medium text-sm text-blue-900">+91 94285 4802</div> */}
+              <div className="font-medium text-sm text-blue-900">+91 94285 04802</div>
               <div className="text-xs text-blue-700/60 mt-0.5">
                 Available 8 AM – 10 PM
               </div>
@@ -120,6 +120,7 @@ export default function ContactPage() {
               <div className="text-xs uppercase tracking-widest text-green-600/70 mb-1">
                 WhatsApp
               </div>
+              <div className="font-medium text-sm text-green-900">+91 94285 04802</div>
               <div className="text-xs text-green-700/60 mt-0.5">
                 Quick replies
               </div>
@@ -161,10 +162,10 @@ export default function ContactPage() {
               <div className="font-medium text-sm text-rose-900">
                 Hotel Avadh
               </div>
-              <div className="text-xs text-rose-700/60 mt-0.5 leading-relaxed">
-                Himmatnagar, Sabarkantha
+              <div className="text-xs text-rose-800/80 mt-1 leading-relaxed">
+                Himmatnagar-Idar Highway, Hinglaj,
                 <br />
-                Gujarat, India
+                Idar, Gujarat 383110
               </div>
             </div>
           </div>
@@ -183,7 +184,7 @@ export default function ContactPage() {
                   {hotelName}
                 </h2>
                 <p className="text-xs text-rose-700/70 mt-1">
-                  Himmatnagar, Gujarat, India
+                  Himmatnagar-Idar Highway, Hinglaj, Idar, Gujarat 383110
                 </p>
               </div>
             </div>
