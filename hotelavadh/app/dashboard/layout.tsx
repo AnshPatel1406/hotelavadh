@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Sidebar } from "@/components/dashboard/Sidebar";
+import { DashboardTopNav } from "@/components/dashboard/DashboardTopNav";
 
 export default async function DashboardLayout({
   children,
@@ -21,12 +21,10 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
-      <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <main className="flex-1 overflow-y-auto p-8">
-          {children}
-        </main>
+    <div className="w-full space-y-6">
+      <DashboardTopNav />
+      <div className="w-full">
+        {children}
       </div>
     </div>
   );

@@ -77,13 +77,13 @@ export function BookingList({
           <table className="w-full text-left text-xs text-gray-600">
             <thead className="bg-gray-50/80 text-[11px] uppercase tracking-wider text-gray-700 border-b border-gray-200">
               <tr>
-                <th className="px-5 py-3.5">Reference ID</th>
-                <th className="px-5 py-3.5">Guest</th>
-                <th className="px-5 py-3.5">Room</th>
-                <th className="px-5 py-3.5">Dates</th>
-                <th className="px-5 py-3.5">Amount</th>
-                <th className="px-5 py-3.5">Status</th>
-                <th className="px-5 py-3.5">Actions</th>
+                <th className="px-3.5 py-3">Ref ID</th>
+                <th className="px-3.5 py-3">Guest</th>
+                <th className="px-3.5 py-3">Room</th>
+                <th className="px-3.5 py-3">Dates</th>
+                <th className="px-3.5 py-3">Amount</th>
+                <th className="px-3.5 py-3">Status</th>
+                <th className="px-3.5 py-3">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -97,7 +97,7 @@ export function BookingList({
                 return (
                   <tr key={booking._id} className="bg-white hover:bg-stone-50/60 transition">
                     {/* Booking Reference ID */}
-                    <td className="px-5 py-4 whitespace-nowrap">
+                    <td className="px-3.5 py-3 whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
                         <span className="font-mono font-bold text-xs text-stone-900 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-300 shadow-2xs">
                           #{refCode}
@@ -106,7 +106,7 @@ export function BookingList({
                     </td>
 
                     {/* Guest details */}
-                    <td className="px-5 py-4">
+                    <td className="px-3.5 py-3">
                       <p className="font-semibold text-gray-900">
                         {booking.user?.name || booking.guestName || "Guest"}
                       </p>
@@ -121,7 +121,7 @@ export function BookingList({
                     </td>
 
                     {/* Room details */}
-                    <td className="px-5 py-4">
+                    <td className="px-3.5 py-3">
                       <p className="font-medium text-gray-900">{booking.room?.title || "Room"}</p>
                       <p className="text-[11px] text-gray-500">
                         {booking.guests} guest{booking.guests > 1 ? "s" : ""}
@@ -129,7 +129,7 @@ export function BookingList({
                     </td>
 
                     {/* Dates */}
-                    <td className="px-5 py-4 whitespace-nowrap text-[11px]">
+                    <td className="px-3.5 py-3 whitespace-nowrap text-[11px]">
                       <div>
                         In:{" "}
                         <strong>
@@ -151,12 +151,12 @@ export function BookingList({
                     </td>
 
                     {/* Amount */}
-                    <td className="px-5 py-4 font-semibold text-gray-900 whitespace-nowrap">
+                    <td className="px-3.5 py-3 font-semibold text-gray-900 whitespace-nowrap">
                       ₹{booking.totalPrice?.toLocaleString("en-IN")}
                     </td>
 
                     {/* Status */}
-                    <td className="px-5 py-4 whitespace-nowrap">
+                    <td className="px-3.5 py-3 whitespace-nowrap">
                       <span
                         className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
                           booking.status === "confirmed"
@@ -179,8 +179,8 @@ export function BookingList({
                     </td>
 
                     {/* Actions */}
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-2 flex-wrap">
+                    <td className="px-3.5 py-3 whitespace-nowrap">
+                      <div className="flex items-center gap-1.5 flex-nowrap">
                         {/* Status: PENDING */}
                         {booking.status === "pending" && isStaff && (
                           <>

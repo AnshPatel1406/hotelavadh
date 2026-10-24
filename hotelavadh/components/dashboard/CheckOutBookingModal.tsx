@@ -43,7 +43,7 @@ export function CheckOutBookingModal({ booking, onCompleted }: { booking: any; o
         title="Check-out Guest & Finish Order"
       >
         <CheckCircle className="h-3.5 w-3.5 text-stone-700" />
-        <span>Check Out / Finish</span>
+        <span>Check Out</span>
       </button>
 
       {open && (
