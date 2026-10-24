@@ -13,7 +13,6 @@ interface BookingEmailParams {
   checkOutDate: string;
   guests: number;
   checkInCode: string;
-  qrDataUrl: string; // base64 PNG data URL
 }
 
 export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
@@ -26,7 +25,6 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
     checkOutDate,
     guests,
     checkInCode,
-    qrDataUrl,
   } = params;
 
   const html = `
@@ -97,13 +95,7 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
                 <div style="display:inline-block;background:#0F5C5C;color:#fff;font-size:32px;font-weight:800;letter-spacing:10px;padding:16px 32px;border-radius:10px;font-family:monospace;">
                   ${checkInCode}
                 </div>
-                <p style="margin:12px 0 0;font-size:12px;color:#9ca3af;">Keep this code safe. Show it at the front desk if QR is unavailable.</p>
-              </div>
-
-              <!-- QR Code -->
-              <div style="text-align:center;margin-bottom:32px;">
-                <p style="margin:0 0 12px;font-size:14px;color:#6b7280;">Or scan this QR code at the front desk</p>
-                <img src="${qrDataUrl}" alt="Check-in QR Code" width="180" height="180" style="border:1px solid #e5e7eb;border-radius:8px;" />
+                <p style="margin:12px 0 0;font-size:12px;color:#9ca3af;">Keep this reference code safe. Show it at the front desk upon arrival.</p>
               </div>
 
               <p style="margin:0;font-size:13px;color:#9ca3af;text-align:center;">

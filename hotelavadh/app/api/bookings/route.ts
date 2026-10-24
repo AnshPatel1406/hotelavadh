@@ -6,7 +6,7 @@ import Booking from "@/src/models/Bookings";
 import Room from "@/src/models/Room";
 import User from "@/src/models/User";
 import { CreateBookingSchema } from "@/src/schemas/CreateBookingSchema";
-import { generateCheckInCode, generateQRCode } from "@/src/lib/checkin";
+import { generateCheckInCode } from "@/src/lib/checkin";
 import { sendBookingConfirmationEmail } from "@/src/lib/email";
 
 export async function GET() {
@@ -89,11 +89,6 @@ export async function POST(req: Request) {
       bookedBy: "user",
     });
 
-    // Generate QR with booking ID baked in
-    const qrDataUrl = await generateQRCode(booking._id.toString(), checkInCode);
-    booking.qrData = qrDataUrl;
-    await booking.save();
-
     // Push booking ID to user & store phone if missing
     const user = await User.findById((session.user as any).id);
     if (user) {
@@ -116,7 +111,6 @@ export async function POST(req: Request) {
         checkOutDate: checkOut.toLocaleDateString("en-IN", { dateStyle: "long" }),
         guests: result.data.guests,
         checkInCode,
-        qrDataUrl,
       }).catch((err) => console.error("Email send failed:", err));
     }
 

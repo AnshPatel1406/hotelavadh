@@ -79,7 +79,6 @@ export async function POST(req: Request) {
         checkOutDate: new Date(booking.checkOutDate).toLocaleString("en-IN", { dateStyle: "long", timeStyle: "short" }),
         guests: booking.guests,
         checkInCode: booking.checkInCode,
-        qrDataUrl: booking.qrData,
       });
     }
 

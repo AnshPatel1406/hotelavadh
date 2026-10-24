@@ -6,7 +6,7 @@ import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import Room from "@/src/models/Room";
 import User from "@/src/models/User";
-import { generateCheckInCode, generateQRCode } from "@/src/lib/checkin";
+import { generateCheckInCode } from "@/src/lib/checkin";
 
 const AdminBookingSchema = z.object({
   roomId: z.string().min(1, "Room is required"),
@@ -106,11 +106,6 @@ export async function POST(req: Request) {
       guestName: guestName.trim(),
       bookedBy: role,
     });
-
-    // Generate QR with booking ID & reference code
-    const qrDataUrl = await generateQRCode(booking._id.toString(), referenceId);
-    booking.qrData = qrDataUrl;
-    await booking.save();
 
     // Link to user document
     await User.findByIdAndUpdate(linkedUser._id, { $push: { bookings: booking._id } });

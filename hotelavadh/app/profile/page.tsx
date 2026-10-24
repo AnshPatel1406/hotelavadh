@@ -278,111 +278,89 @@ export default async function ProfilePage() {
                   key={booking._id.toString()}
                   className="bg-white rounded-3xl shadow-sm border border-stone-200 overflow-hidden"
                 >
-                  <div className="flex flex-col md:flex-row">
-                    {/* Booking Info */}
-                    <div className="flex-1 p-6 md:p-7 space-y-5">
-                      <div className="flex items-start justify-between gap-3 border-b border-stone-100 pb-4">
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-[11px] font-medium text-stone-500 uppercase tracking-wider">
-                              Booking Reference
-                            </span>
-                            <span className="font-mono text-sm font-extrabold text-stone-900 bg-stone-100 border border-stone-300 px-2.5 py-0.5 rounded-lg">
-                              #{refCode}
-                            </span>
-                          </div>
-                          <h3 className="text-xl font-semibold text-stone-900">
-                            {(booking.room as any)?.title || "Room"}
-                          </h3>
-                          <p className="text-xs text-stone-500 capitalize">
-                            {(booking.room as any)?.type} Room · Room #{(booking.room as any)?.roomNumber}
-                          </p>
+                  <div className="p-6 md:p-7 space-y-5">
+                    <div className="flex items-start justify-between gap-3 border-b border-stone-100 pb-4">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[11px] font-medium text-stone-500 uppercase tracking-wider">
+                            Booking Reference
+                          </span>
+                          <span className="font-mono text-sm font-extrabold text-stone-900 bg-stone-100 border border-stone-300 px-2.5 py-0.5 rounded-lg">
+                            #{refCode}
+                          </span>
                         </div>
+                        <h3 className="text-xl font-semibold text-stone-900">
+                          {(booking.room as any)?.title || "Room"}
+                        </h3>
+                        <p className="text-xs text-stone-500 capitalize">
+                          {(booking.room as any)?.type} Room · Room #{(booking.room as any)?.roomNumber}
+                        </p>
+                      </div>
 
-                        <span
-                          className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold border ${statusInfo.color}`}
-                        >
-                          <StatusIcon className="h-3.5 w-3.5" />
-                          {statusInfo.label}
+                      <span
+                        className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold border ${statusInfo.color}`}
+                      >
+                        <StatusIcon className="h-3.5 w-3.5" />
+                        {statusInfo.label}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                      <div className="flex items-center gap-2 text-stone-600">
+                        <CalendarCheck className="h-4 w-4 text-stone-500" />
+                        <span>
+                          Check-in:{" "}
+                          <strong className="text-stone-900">
+                            {new Date(booking.checkInDate).toLocaleDateString("en-IN", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </strong>
                         </span>
                       </div>
-
-                      <div className="grid grid-cols-2 gap-4 text-xs">
-                        <div className="flex items-center gap-2 text-stone-600">
-                          <CalendarCheck className="h-4 w-4 text-stone-500" />
-                          <span>
-                            Check-in:{" "}
-                            <strong className="text-stone-900">
-                              {new Date(booking.checkInDate).toLocaleDateString("en-IN", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </strong>
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 text-stone-600">
-                          <CalendarCheck className="h-4 w-4 text-stone-500" />
-                          <span>
-                            Check-out:{" "}
-                            <strong className="text-stone-900">
-                              {new Date(booking.checkOutDate).toLocaleDateString("en-IN", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </strong>
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 text-stone-600">
-                          <BedDouble className="h-4 w-4 text-stone-500" />
-                          <span>
-                            Guests: <strong className="text-stone-900">{booking.guests}</strong>
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 text-stone-600">
-                          <span className="text-stone-400 font-mono">₹</span>
-                          <span>
-                            Total: <strong className="text-stone-900">₹{booking.totalPrice?.toLocaleString("en-IN")}</strong>
-                          </span>
-                        </div>
+                      <div className="flex items-center gap-2 text-stone-600">
+                        <CalendarCheck className="h-4 w-4 text-stone-500" />
+                        <span>
+                          Check-out:{" "}
+                          <strong className="text-stone-900">
+                            {new Date(booking.checkOutDate).toLocaleDateString("en-IN", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </strong>
+                        </span>
                       </div>
-
-                      {/* Prominent Reference & Check-in Code Box */}
-                      <div className="rounded-2xl bg-stone-900 text-white p-4 flex items-center justify-between gap-4">
-                        <div>
-                          <p className="text-[10px] text-stone-300 uppercase tracking-widest font-medium">
-                            Check-in Reference Code
-                          </p>
-                          <p className="font-mono text-2xl font-bold tracking-widest text-amber-300 mt-0.5">
-                            {refCode}
-                          </p>
-                          <p className="text-[11px] text-stone-400 mt-0.5">
-                            Present this code at Hotel Avadh reception
-                          </p>
-                        </div>
-                        <ShieldCheck className="h-8 w-8 text-amber-400 shrink-0" />
+                      <div className="flex items-center gap-2 text-stone-600">
+                        <BedDouble className="h-4 w-4 text-stone-500" />
+                        <span>
+                          Guests: <strong className="text-stone-900">{booking.guests}</strong>
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-stone-600">
+                        <span className="text-stone-400 font-mono">₹</span>
+                        <span>
+                          Total: <strong className="text-stone-900">₹{booking.totalPrice?.toLocaleString("en-IN")}</strong>
+                        </span>
                       </div>
                     </div>
 
-                    {/* QR Code */}
-                    {booking.qrData && (
-                      <div className="flex flex-col items-center justify-center border-t md:border-t-0 md:border-l border-stone-200 p-6 bg-stone-50/50 gap-3">
-                        <p className="text-[10px] font-semibold text-stone-500 uppercase tracking-wider">
-                          Quick Scan QR
+                    {/* Prominent Reference & Check-in Code Box */}
+                    <div className="rounded-2xl bg-stone-900 text-white p-5 flex items-center justify-between gap-4">
+                      <div>
+                        <p className="text-[10px] text-stone-300 uppercase tracking-widest font-medium">
+                          Check-in Reference Code
                         </p>
-                        <Image
-                          src={booking.qrData}
-                          alt="Check-in QR Code"
-                          width={140}
-                          height={140}
-                          className="rounded-2xl border-2 border-stone-300 bg-white p-1"
-                        />
-                        <p className="text-[10px] text-stone-400 text-center font-mono">
-                          Ref: #{refCode}
+                        <p className="font-mono text-2xl font-bold tracking-widest text-amber-300 mt-0.5">
+                          #{refCode}
+                        </p>
+                        <p className="text-[11px] text-stone-400 mt-0.5">
+                          Present this reference code at Hotel Avadh reception desk upon arrival
                         </p>
                       </div>
-                    )}
+                      <ShieldCheck className="h-8 w-8 text-amber-400 shrink-0" />
+                    </div>
                   </div>
                 </div>
               );

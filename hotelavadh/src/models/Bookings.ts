@@ -11,7 +11,7 @@ export interface IBooking extends Document {
   specialRequests?: string;
   // Check-in system fields
   checkInCode: string;         // Unique 6-char code for check-in
-  qrData: string;              // Base64 QR image or URL
+  qrData?: string;             // Optional legacy QR image or URL
   guestEmail?: string;         // For walk-in bookings without a user account
   guestName?: string;          // For walk-in bookings without a user account
   guestPhone?: string;         // Contact phone for guest
