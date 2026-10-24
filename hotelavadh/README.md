@@ -34,12 +34,10 @@ npm run dev
 - `POST /api/users`
 - `GET /api/bookings`
 - `POST /api/bookings`
-- `GET /api/payments`
-- `POST /api/payments`
 
 ## Project structure
 
-- `src/models/` — Mongoose schemas for users, rooms, bookings, and payments.
+- `src/models/` — Mongoose schemas for users, rooms, and bookings.
 - `src/lib/mongodb.ts` — Reusable MongoDB connection helper.
 - `app/api/` — Server route handlers for core CRUD operations.
 - `app/page.tsx` — Landing page with feature overview.
