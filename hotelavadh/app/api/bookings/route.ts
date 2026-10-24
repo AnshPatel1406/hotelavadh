@@ -63,23 +63,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check for conflicting bookings for this room
+    // Calculate dates, nights and price
     const checkIn = new Date(result.data.checkInDate);
     const checkOut = new Date(result.data.checkOutDate);
-
-    const conflictingBooking = await Booking.findOne({
-      room: room._id,
-      status: { $in: ["confirmed", "checked_in"] },
-      $or: [
-        { checkInDate: { $lt: checkOut }, checkOutDate: { $gt: checkIn } }
-      ]
-    });
-
-    if (conflictingBooking) {
-      return NextResponse.json({ success: false, message: "Room is already booked for these dates" }, { status: 409 });
-    }
-
-    // Calculate nights and price
     const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
     const totalPrice = nights * room.pricePerNight;
 

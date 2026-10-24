@@ -62,17 +62,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, message: "Check-out must be after check-in" }, { status: 400 });
     }
 
-    // Check conflicts
-    const conflict = await Booking.findOne({
-      room: room._id,
-      status: { $in: ["confirmed", "checked_in"] },
-      $or: [{ checkInDate: { $lt: checkOut }, checkOutDate: { $gt: checkIn } }],
-    });
-
-    if (conflict) {
-      return NextResponse.json({ success: false, message: "Room is already booked for these dates" }, { status: 409 });
-    }
-
     const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
     const totalPrice = nights * room.pricePerNight;
 

@@ -192,11 +192,6 @@ export function BookingForm({
       const bookingData = await bookingRes.json();
 
       if (!bookingRes.ok || !bookingData.success) {
-        if (bookingRes.status === 409) {
-          setErrorMessage(bookingData.message || "This room is already booked for the selected dates. Please select different dates.");
-          setLoading(false);
-          return;
-        }
         console.warn("Booking API notice:", bookingData.message);
       } else if (bookingData.booking) {
         createdBookingRef =
