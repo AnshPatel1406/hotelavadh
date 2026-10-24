@@ -480,21 +480,35 @@ export function BookingForm({
             </div>
           </div>
 
-          {/* Contact Phone (Optional) */}
+
+          {/* Contact Phone (Required) */}
           <div>
-            <label className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-600 mb-1.5">
+            <label
+              htmlFor="booking-phone"
+              className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-stone-600 mb-1.5"
+            >
               <Phone className="h-3.5 w-3.5 text-stone-400" />
               WhatsApp / Contact Number
-              <span className="text-[10px] text-stone-400 font-normal lowercase">(optional)</span>
+              <span className="text-[10px] text-rose-600 font-medium">
+                (required)
+              </span>
             </label>
+
             <input
+              id="booking-phone"
               type="tel"
               placeholder="+91 98765 43210"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              required
+              onChange={(e) => {
+                setPhone(e.target.value);
+                setErrorMessage(null);
+              }}
+              aria-invalid={Boolean(errorMessage)}
               className="w-full rounded-2xl border border-stone-200 bg-stone-50/50 px-3.5 py-2.5 text-sm text-stone-900 outline-none transition focus:border-stone-900 focus:bg-white focus:ring-1 focus:ring-stone-900 placeholder:text-stone-400"
             />
           </div>
+
 
           {/* Special Requests (Optional) */}
           <div>
