@@ -126,7 +126,7 @@ export function BookingForm({
       return;
     }
 
-    // 3. Validate contact phone (REQUIRED)
+    // 3. Validate contact phone with proper regex (REQUIRED)
     const trimmedPhone = phone.trim();
     if (!trimmedPhone) {
       setErrorMessage("Please enter your WhatsApp / contact phone number to proceed.");
@@ -134,9 +134,22 @@ export function BookingForm({
       return;
     }
 
+    // Strip spaces, dashes, parentheses
+    const normalizedPhone = trimmedPhone.replace(/[\s\-()]/g, "");
     const digitsOnly = trimmedPhone.replace(/\D/g, "");
-    if (digitsOnly.length < 10) {
-      setErrorMessage("Please enter a valid phone number (at least 10 digits).");
+
+    // Proper Indian phone regex:
+    // 10 digits starting with 6, 7, 8, or 9
+    // OR 12 digits starting with 91 (or +91) followed by 10 digits starting with 6, 7, 8, or 9
+    // OR 11 digits starting with 0 followed by 10 digits starting with 6, 7, 8, or 9
+    const indianPhoneRegex = /^(?:\+?91|0)?[6-9]\d{9}$/;
+    const isValidDigitsLength =
+      digitsOnly.length === 10 ||
+      (digitsOnly.length === 12 && digitsOnly.startsWith("91")) ||
+      (digitsOnly.length === 11 && digitsOnly.startsWith("0"));
+
+    if (!indianPhoneRegex.test(normalizedPhone) || !isValidDigitsLength) {
+      setErrorMessage("Please enter a valid 10-digit mobile number (or 12 digits starting with 91).");
       document.getElementById("booking-phone")?.focus();
       return;
     }
@@ -512,6 +525,7 @@ export function BookingForm({
             <input
               id="booking-phone"
               type="tel"
+              maxLength={16}
               placeholder="+91 98765 43210"
               value={phone}
               required
@@ -526,8 +540,12 @@ export function BookingForm({
                   : "border-stone-200 bg-stone-50/50 focus:border-stone-900 focus:bg-white focus:ring-1 focus:ring-stone-900"
               }`}
             />
-            {errorMessage && errorMessage.toLowerCase().includes("phone") && (
+            {errorMessage && errorMessage.toLowerCase().includes("phone") ? (
               <p className="mt-1 text-xs text-rose-600 font-medium">{errorMessage}</p>
+            ) : (
+              <span className="text-[11px] text-stone-500 mt-1 block">
+                10-digit mobile number (e.g. 9876543210) or 12-digit with 91
+              </span>
             )}
           </div>
 
