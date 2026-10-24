@@ -1,14 +1,9 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { z } from "zod";
 import connectToDatabase from "@/src/lib/mongodb";
 import Booking from "@/src/models/Bookings";
 import mongoose from "mongoose";
-
-const CheckInSchema = z.object({
-  checkInCode: z.string().min(6).max(6),
-});
 
 export async function PATCH(
   req: Request,
@@ -27,16 +22,6 @@ export async function PATCH(
       return NextResponse.json({ success: false, message: "Invalid booking ID" }, { status: 400 });
     }
 
-    const body = await req.json();
-    const result = CheckInSchema.safeParse(body);
-
-    if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: "Check-in code is required (6 characters)" },
-        { status: 400 }
-      );
-    }
-
     await connectToDatabase();
 
     const booking = await Booking.findById(id).populate("room", "title");
@@ -44,18 +29,18 @@ export async function PATCH(
       return NextResponse.json({ success: false, message: "Booking not found" }, { status: 404 });
     }
 
-    if (booking.status !== "confirmed" && booking.status !== "pending") {
+    if (booking.status === "checked_in") {
       return NextResponse.json(
-        { success: false, message: `Cannot check in: booking is currently '${booking.status}'` },
+        { success: false, message: "Guest is already checked in" },
         { status: 400 }
       );
     }
 
-    const providedCode = result.data.checkInCode.toUpperCase();
-    const isMasterCode = providedCode === "AVADHH";
-    
-    if (booking.checkInCode !== providedCode && !isMasterCode) {
-      return NextResponse.json({ success: false, message: "Invalid check-in code" }, { status: 400 });
+    if (booking.status === "checked_out" || booking.status === "cancelled") {
+      return NextResponse.json(
+        { success: false, message: `Cannot check in: booking is currently '${booking.status}'` },
+        { status: 400 }
+      );
     }
 
     booking.status = "checked_in";
