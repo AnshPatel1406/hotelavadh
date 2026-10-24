@@ -7,7 +7,6 @@ import Booking from "@/src/models/Bookings";
 import Room from "@/src/models/Room";
 import User from "@/src/models/User";
 import { generateCheckInCode, generateQRCode } from "@/src/lib/checkin";
-import { sendBookingConfirmationEmail } from "@/src/lib/email";
 
 const AdminBookingSchema = z.object({
   roomId: z.string().min(1, "Room is required"),
@@ -15,7 +14,8 @@ const AdminBookingSchema = z.object({
   checkOutDate: z.string().min(1, "Check-out date is required"),
   guests: z.number().min(1, "At least 1 guest required"),
   guestName: z.string().min(1, "Guest name is required"),
-  guestEmail: z.string().email("Valid guest email is required"),
+  guestEmail: z.string().optional(),
+  guestPhone: z.string().optional(),
   specialRequests: z.string().optional(),
 });
 
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     await connectToDatabase();
 
-    const { roomId, checkInDate, checkOutDate, guests, guestName, guestEmail, specialRequests } = result.data;
+    const { roomId, checkInDate, checkOutDate, guests, guestName, guestEmail, guestPhone, specialRequests } = result.data;
 
     // Verify room
     const room = await Room.findById(roomId);
@@ -65,56 +65,57 @@ export async function POST(req: Request) {
     const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
     const totalPrice = nights * room.pricePerNight;
 
-    // Try to find or create a user by email for linking
-    let linkedUser = await User.findOne({ email: guestEmail.toLowerCase() });
+    // Find or create linked user
+    const emailToUse = guestEmail?.trim()
+      ? guestEmail.trim().toLowerCase()
+      : `walkin_${Date.now()}@hotelavadh.local`;
+
+    let linkedUser = await User.findOne({ email: emailToUse });
     if (!linkedUser) {
       linkedUser = await User.create({
-        name: guestName,
-        email: guestEmail.toLowerCase(),
+        name: guestName.trim(),
+        email: emailToUse,
+        phone: guestPhone?.trim() || undefined,
         role: "user",
         provider: "credentials",
       });
     }
 
-    const checkInCode = generateCheckInCode();
+    // Generate random reference ID (like WhatsApp bookings)
+    const referenceId = generateCheckInCode();
 
-    // Create booking as confirmed immediately (walk-in, no payment needed)
+    const combinedNotes = [
+      guestPhone?.trim() ? `Guest Phone: ${guestPhone.trim()}` : "",
+      specialRequests?.trim() ? `Special Requests: ${specialRequests.trim()}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    // Create walk-in booking as confirmed
     const booking = await Booking.create({
       user: linkedUser._id,
       room: room._id,
       checkInDate: checkIn,
       checkOutDate: checkOut,
       guests,
-      specialRequests,
+      specialRequests: combinedNotes || undefined,
       totalPrice,
       status: "confirmed",
-      checkInCode,
-      guestEmail: guestEmail.toLowerCase(),
-      guestName,
+      checkInCode: referenceId,
+      guestEmail: guestEmail?.trim() ? guestEmail.trim().toLowerCase() : undefined,
+      guestName: guestName.trim(),
       bookedBy: role,
     });
 
-    // Generate QR
-    const qrDataUrl = await generateQRCode(booking._id.toString(), checkInCode);
+    // Generate QR with booking ID & reference code
+    const qrDataUrl = await generateQRCode(booking._id.toString(), referenceId);
     booking.qrData = qrDataUrl;
     await booking.save();
 
-    // Link to user
+    // Link to user document
     await User.findByIdAndUpdate(linkedUser._id, { $push: { bookings: booking._id } });
 
-    // Send email (must await on Vercel)
-    await sendBookingConfirmationEmail({
-      guestEmail: guestEmail.toLowerCase(),
-      guestName,
-      bookingId: booking._id.toString(),
-      roomTitle: room.title,
-      checkInDate: checkIn.toLocaleString("en-IN", { dateStyle: "long", timeStyle: "short" }),
-      checkOutDate: checkOut.toLocaleString("en-IN", { dateStyle: "long", timeStyle: "short" }),
-      guests,
-      checkInCode,
-      qrDataUrl,
-    });
-
+    // No email codes or emails sent for manual/walk-in bookings
     return NextResponse.json({ success: true, booking }, { status: 201 });
   } catch (error) {
     console.error("ADMIN BOOKING ERROR:", error);
