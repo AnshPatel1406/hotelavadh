@@ -73,7 +73,7 @@ export default function Navbar() {
 
         {/* BOTTOM STRIP */}
         <div className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
+          <div className="mx-auto max-w-6xl px-4 h-[70px] md:h-16 flex items-center justify-between">
             {/* LEFT LINKS (Desktop) */}
             <nav className="hidden md:flex items-center gap-10">
               {leftLinks.map((l) => (
@@ -87,7 +87,7 @@ export default function Navbar() {
               className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[48%] z-20"
               aria-label="Go to Home"
             >
-              <div className="relative w-[160px] h-[170px]">
+              <div className="relative w-[150px] h-[160px]">
                 <Image
                   src="/logo.png"
                   alt="Hotel Avadh"
@@ -110,15 +110,17 @@ export default function Navbar() {
               {/* Left spacer to keep logo centered */}
               <div className="w-10" />
 
-              {/* Centered Mobile Logo (Cleanly contained in white bar, does not block top strip) */}
-              <Link href="/" className="relative w-[110px] h-[48px]" aria-label="Go to Home">
-                <Image
-                  src="/logo.png"
-                  alt="Hotel Avadh"
-                  fill
-                  className="object-contain"
-                  priority
-                />
+              {/* Centered Mobile Logo (Prominently sized and sharp) */}
+              <Link href="/" className="relative flex items-center justify-center py-1" aria-label="Go to Home">
+                <div className="relative w-[78px] h-[64px]">
+                  <Image
+                    src="/logo.png"
+                    alt="Hotel Avadh"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
               </Link>
 
               {/* 3 Horizontal Lines Fancy Hamburger Menu Button */}
@@ -138,12 +140,12 @@ export default function Navbar() {
                     {/* Drawer Header */}
                     <div className="p-4 border-b bg-stone-50/50">
                       <div className="flex items-center gap-3">
-                        <div className="relative w-8 h-8 flex items-center justify-center">
+                        <div className="relative w-10 h-10 flex items-center justify-center">
                           <Image
                             src="/logo.png"
                             alt="Hotel Avadh"
-                            width={32}
-                            height={32}
+                            width={40}
+                            height={40}
                             className="object-contain"
                           />
                         </div>
