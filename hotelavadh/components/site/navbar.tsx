@@ -81,13 +81,13 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* CENTER LOGO (Desktop: overlaps both strips) */}
+            {/* CENTER LOGO (Desktop: overlaps both strips gracefully without overflowing) */}
             <Link
               href="/"
               className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[48%] z-20"
               aria-label="Go to Home"
             >
-              <div className="relative w-[150px] h-[160px]">
+              <div className="relative w-[86px] h-[95px]">
                 <Image
                   src="/logo.png"
                   alt="Hotel Avadh"
