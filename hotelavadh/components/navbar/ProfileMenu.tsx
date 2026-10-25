@@ -30,23 +30,23 @@ export default function ProfileMenu() {
     <div ref={menuRef} className="relative z-[9999]">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-2 rounded-full border border-white/30 bg-white px-2 py-1 shadow-md transition hover:shadow-lg"
+        className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/30 bg-white px-1.5 py-0.5 sm:px-2 sm:py-1 shadow-sm transition hover:shadow-md"
       >
         {session?.user?.image ? (
           <Image
             src={session.user.image}
             alt="Profile"
-            width={36}
-            height={36}
-            className="rounded-full object-cover"
+            width={32}
+            height={32}
+            className="rounded-full object-cover w-6 h-6 sm:w-8 sm:h-8"
           />
         ) : (
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200">
-            <User className="h-5 w-5 text-gray-700" />
+          <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-gray-200">
+            <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gray-700" />
           </div>
         )}
 
-        <ChevronDown size={18} className="text-gray-700" />
+        <ChevronDown size={14} className="text-gray-700" />
       </button>
 
       {open && (
