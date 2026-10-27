@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { X, Pencil, Loader2 } from "lucide-react";
+import { X, Pencil, Loader2, Plus, Check } from "lucide-react";
 
-const AMENITY_OPTIONS = [
+const DEFAULT_AMENITY_OPTIONS = [
   "Air Conditioning", "Wi-Fi", "TV", "Mini Bar", "Room Service",
   "Bathtub", "Shower", "King Bed", "Twin Beds", "City View",
   "Swimming Pool Access", "Gym Access", "Safe", "Balcony",
@@ -12,6 +12,10 @@ const AMENITY_OPTIONS = [
 export function EditRoomModal({ room, onUpdated }: { room: any; onUpdated: () => void }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [availableOptions, setAvailableOptions] = useState<string[]>(() =>
+    Array.from(new Set([...DEFAULT_AMENITY_OPTIONS, ...(room.amenities || [])]))
+  );
+  const [customAmenity, setCustomAmenity] = useState("");
   const [form, setForm] = useState({
     roomNumber: room.roomNumber.toString(),
     type: room.type,
@@ -19,19 +23,51 @@ export function EditRoomModal({ room, onUpdated }: { room: any; onUpdated: () =>
     description: room.description,
     pricePerNight: room.pricePerNight.toString(),
     maxGuests: room.maxGuests.toString(),
-    amenities: room.amenities || [],
+    amenities: (room.amenities as string[]) || [],
     isActive: room.isActive,
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const toggleAmenity = (a: string) => {
-    setForm(prev => ({
+  const addCustomAmenity = () => {
+    const trimmed = customAmenity.trim();
+    if (!trimmed) return;
+
+    if (!form.amenities.includes(trimmed)) {
+      setForm((prev) => ({
+        ...prev,
+        amenities: [...prev.amenities, trimmed],
+      }));
+    }
+
+    if (!availableOptions.includes(trimmed)) {
+      setAvailableOptions((prev) => [...prev, trimmed]);
+    }
+
+    setCustomAmenity("");
+  };
+
+  const removeAmenity = (a: string) => {
+    setForm((prev) => ({
       ...prev,
-      amenities: prev.amenities.includes(a)
-        ? prev.amenities.filter((x: string) => x !== a)
-        : [...prev.amenities, a],
+      amenities: prev.amenities.filter((x: string) => x !== a),
     }));
+  };
+
+  const toggleAmenity = (a: string) => {
+    if (form.amenities.includes(a)) {
+      removeAmenity(a);
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        amenities: [...prev.amenities, a],
+      }));
+    }
+  };
+
+  const removeOptionPermanently = (a: string) => {
+    removeAmenity(a);
+    setAvailableOptions((prev) => prev.filter((x) => x !== a));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -169,24 +205,120 @@ export function EditRoomModal({ room, onUpdated }: { room: any; onUpdated: () =>
                 </div>
               </div>
 
-              {/* Amenities */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Amenities</label>
-                <div className="flex flex-wrap gap-2">
-                  {AMENITY_OPTIONS.map((a) => (
+              {/* Amenities Management */}
+              <div className="space-y-2.5 pt-1">
+                <div className="flex items-center justify-between">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Amenities ({form.amenities.length} selected)
+                  </label>
+                  {form.amenities.length > 0 && (
                     <button
-                      key={a}
                       type="button"
-                      onClick={() => toggleAmenity(a)}
-                      className={`rounded-full px-3 py-1 text-xs font-medium border transition-colors ${
-                        form.amenities.includes(a)
-                          ? "bg-gray-900 text-white border-gray-900"
-                          : "bg-white text-gray-600 border-gray-300 hover:border-gray-900"
-                      }`}
+                      onClick={() => setForm((prev) => ({ ...prev, amenities: [] }))}
+                      className="text-xs text-red-600 hover:underline"
                     >
-                      {a}
+                      Clear all
                     </button>
-                  ))}
+                  )}
+                </div>
+
+                {/* Custom Amenity Input */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={customAmenity}
+                    onChange={(e) => setCustomAmenity(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addCustomAmenity();
+                      }
+                    }}
+                    placeholder="Type custom amenity (e.g. Geyser, Smart TV)..."
+                    className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+                  />
+                  <button
+                    type="button"
+                    onClick={addCustomAmenity}
+                    className="flex items-center gap-1.5 rounded-lg bg-gray-900 px-3.5 py-2 text-xs font-semibold text-white hover:bg-gray-800 transition-colors shrink-0"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span>Add</span>
+                  </button>
+                </div>
+
+                {/* Active Selected Amenities Badges */}
+                {form.amenities.length > 0 ? (
+                  <div className="rounded-xl bg-gray-50 p-3 border border-gray-200">
+                    <div className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                      Active Amenities on this Room (Click ✕ to remove)
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {form.amenities.map((a) => (
+                        <span
+                          key={a}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[#0F5C5C] text-white px-3 py-1 text-xs font-medium shadow-xs"
+                        >
+                          <span>{a}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeAmenity(a)}
+                            className="rounded-full p-0.5 hover:bg-white/20 text-white/90 hover:text-white transition-colors"
+                            title={`Remove ${a}`}
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="rounded-lg bg-amber-50/70 border border-amber-200/60 px-3 py-2 text-xs text-amber-800">
+                    No amenities added yet. Pick from the suggestions below or add custom amenities above.
+                  </div>
+                )}
+
+                {/* Preset Suggestions Pool */}
+                <div>
+                  <div className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+                    Quick Suggestions
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pr-1">
+                    {availableOptions.map((a) => {
+                      const isSelected = form.amenities.includes(a);
+                      return (
+                        <div
+                          key={a}
+                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium border transition-all ${
+                            isSelected
+                              ? "bg-gray-900 text-white border-gray-900 shadow-xs"
+                              : "bg-white text-gray-700 border-gray-300 hover:border-gray-900 hover:bg-gray-50"
+                          }`}
+                        >
+                          <button
+                            type="button"
+                            onClick={() => toggleAmenity(a)}
+                            className="flex items-center gap-1"
+                          >
+                            {isSelected ? (
+                              <Check className="h-3 w-3 text-emerald-400" />
+                            ) : (
+                              <Plus className="h-3 w-3 text-gray-400" />
+                            )}
+                            <span>{a}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => removeOptionPermanently(a)}
+                            className="ml-0.5 text-gray-400 hover:text-red-500 transition-colors p-0.5"
+                            title={`Remove ${a} from options`}
+                          >
+                            <X className="h-2.5 w-2.5" />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
