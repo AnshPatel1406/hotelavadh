@@ -328,9 +328,8 @@ export default function BanquetPage() {
           </Button>
           <Button
             asChild
-            variant="outline"
             size="lg"
-            className="rounded-full border-white/40 text-white hover:bg-white/10 px-8"
+            className="rounded-full bg-white text-[#0F5C5C] hover:bg-white/90 px-8 font-semibold shadow-md"
           >
             <Link href="/contact">Contact Reception</Link>
           </Button>
