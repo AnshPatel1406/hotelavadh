@@ -3,41 +3,29 @@ import Navbar from "@/components/site/navbar";
 import Footer from "@/components/site/footer";
 import { cn } from "@/lib/utils";
 import AuthProvider from "@/components/providers/SessionProvider";
-import { Playfair_Display, DM_Sans, Geist } from "next/font/google";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500"],
-  display: "swap",
-});
-
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
-  display: "swap",
-});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn("light", playfair.variable, dmSans.variable, geist.variable)}>
-      <body className={cn("min-h-screen bg-background text-foreground")}>
-  <AuthProvider>
-    <Navbar />
+    <html lang="en" className="light">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={cn("min-h-screen bg-background text-foreground font-sans")}>
+        <AuthProvider>
+          <Navbar />
 
-    <main className="mx-auto max-w-6xl px-4 py-10">
-      {children}
-    </main>
+          <main className="mx-auto max-w-6xl px-4 py-10">
+            {children}
+          </main>
 
-    <Footer />
-  </AuthProvider>
-</body>
+          <Footer />
+        </AuthProvider>
+      </body>
     </html>
   );
 }
