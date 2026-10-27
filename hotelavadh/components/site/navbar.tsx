@@ -12,7 +12,7 @@ import { Mail, Menu, ChevronRight } from "lucide-react";
 const leftLinks = [
   { href: "/", label: "Home" },
   { href: "/dining", label: "Dining" },
-  { href: "/banquet", label: "Banquet" },
+  { href: "/banquet", label: "Banquet & Lawn" },
 ];
 
 const rightLinks = [

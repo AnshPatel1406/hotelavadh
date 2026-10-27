@@ -91,7 +91,12 @@ export async function POST(req: Request) {
       .filter(Boolean)
       .join("\n");
 
-    // Create walk-in booking as confirmed
+    const initialStatus =
+      body.status === "checked_in" || body.checkInNow === true
+        ? "checked_in"
+        : "confirmed";
+
+    // Create walk-in booking
     const booking = await Booking.create({
       user: linkedUser._id,
       room: room._id,
@@ -100,10 +105,11 @@ export async function POST(req: Request) {
       guests,
       specialRequests: combinedNotes || undefined,
       totalPrice,
-      status: "confirmed",
+      status: initialStatus,
       checkInCode: referenceId,
       guestEmail: guestEmail?.trim() ? guestEmail.trim().toLowerCase() : undefined,
       guestName: guestName.trim(),
+      guestPhone: guestPhone?.trim() || undefined,
       bookedBy: role,
     });
 

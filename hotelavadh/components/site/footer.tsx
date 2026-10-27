@@ -32,7 +32,7 @@ export default function Footer() {
             <div className="text-sm text-white/80 grid gap-1">
               <Link className="hover:underline" href="/rooms">Rooms</Link>
               <Link className="hover:underline" href="/dining">Dining</Link>
-              <Link className="hover:underline" href="/banquet">Banquet</Link>
+              <Link className="hover:underline" href="/banquet">Banquet &amp; Party Plot</Link>
               <Link className="hover:underline" href="/gallery">Gallery</Link>
               <Link className="hover:underline" href="/contact">Contact</Link>
 
