@@ -20,8 +20,8 @@ export default function Footer() {
               <a className="block hover:underline" href="tel:+919428504802">
                 +91 94285 04802
               </a>
-              <a className="block hover:underline" href="mailto:info@hotelavadh.com">
-                info@hotelavadh.com
+              <a className="block hover:underline" href="mailto:info@hotelavadh.co.in">
+                info@hotelavadh.co.in
               </a>
               <div>Himmatnagar, Gujarat</div>
             </div>

@@ -54,9 +54,9 @@ export default function Navbar() {
               <Mail className="w-3.5 h-3.5 text-[#E6CA65] shrink-0" />
               <a
                 className="hover:underline text-[11px] sm:text-xs text-white/95 font-medium tracking-wide truncate"
-                href="mailto:info@hotelavadh.com"
+                href="mailto:info@hotelavadh.co.in"
               >
-                info@hotelavadh.com
+                info@hotelavadh.co.in
               </a>
             </div>
 
@@ -204,8 +204,11 @@ export default function Navbar() {
                         Get Directions
                       </Link>
                     </Button>
-                    <div className="text-[11px] text-center text-gray-500 pt-1">
-                      Himmatnagar-Idar Highway, Gujarat
+                    <div className="text-[11px] text-center text-gray-500 pt-1 space-y-0.5">
+                      <div>Himmatnagar-Idar Highway, Gujarat</div>
+                      <a href="mailto:info@hotelavadh.co.in" className="text-[#0F5C5C] hover:underline block font-medium">
+                        info@hotelavadh.co.in
+                      </a>
                     </div>
                   </div>
                 </SheetContent>

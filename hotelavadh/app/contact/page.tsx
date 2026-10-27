@@ -130,7 +130,7 @@ export default function ContactPage() {
 
           {/* Email */}
           <a
-            href="mailto:info@hotelavadh.com"
+            href="mailto:info@hotelavadh.co.in"
             className="group flex items-start gap-4 rounded-2xl border border-orange-200 bg-orange-50/40 px-5 py-5 hover:bg-orange-50 hover:border-orange-300 transition"
           >
             <div className="shrink-0 h-10 w-10 rounded-xl bg-orange-100 flex items-center justify-center border border-orange-200">
@@ -141,7 +141,7 @@ export default function ContactPage() {
                 Email
               </div>
               <div className="font-medium text-sm text-orange-900">
-                info@hotelavadh.com
+                info@hotelavadh.co.in
               </div>
               <div className="text-xs text-orange-700/60 mt-0.5">
                 We reply within 24 hours
