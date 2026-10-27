@@ -174,14 +174,14 @@ export default function HomePage() {
               variant="outline"
               className="rounded-none border-[#0F5C5C]/35 text-[#0F5C5C] hover:bg-[#0F5C5C]/5 hover:border-[#0F5C5C]/55 px-6 text-[13px] tracking-wide font-sans transition-colors"
             >
-              <a href="tel:+919428504802">Call Now</a>
+              <a href="tel:+919876598765">Call Now</a>
             </Button>
 
             <Button
               asChild
               className="rounded-none bg-[#0F5C5C] text-white hover:bg-[#0B4A4A] px-6 text-[13px] tracking-wide font-sans transition-colors"
             >
-              <a href="https://wa.me/919428504802" target="_blank" rel="noreferrer">
+              <a href="https://wa.me/919876598765" target="_blank" rel="noreferrer">
                 WhatsApp
               </a>
             </Button>

@@ -208,7 +208,7 @@ export function BookingForm({
       setLoading(false);
     }
 
-    // 4. Construct WhatsApp Message for Hotel Admin (+91 94285 04802)
+    // 4. Construct WhatsApp Message for Hotel Admin (+91 98765 98765)
     const targetUrl = generateWhatsAppBookingUrl({
       guestName: session?.user?.name || "Valued Guest",
       guestEmail: session?.user?.email || "Provided on account",
@@ -253,7 +253,7 @@ export function BookingForm({
             Connecting to Hotel Avadh WhatsApp
           </h3>
           <p className="text-sm text-stone-600 max-w-md mx-auto leading-relaxed">
-            Your reservation details for <strong>{roomTitle}</strong> have been formatted and ready to send to our hotel admin at <strong>+91 94285 04802</strong>.
+            Your reservation details for <strong>{roomTitle}</strong> have been formatted and ready to send to our hotel admin at <strong>+91 98765 98765</strong>.
           </p>
         </div>
 
@@ -574,7 +574,7 @@ export function BookingForm({
 
         {/* Assurance text */}
         <p className="text-center text-[11px] text-stone-500 leading-relaxed">
-          Clicking book connects you directly to Hotel Avadh WhatsApp desk (<strong>+91 94285 04802</strong>) with your prefilled details. Pay later on confirmation.
+          Clicking book connects you directly to Hotel Avadh WhatsApp desk (<strong>+91 98765 98765</strong>) with your prefilled details. Pay later on confirmation.
         </p>
       </div>
     </>

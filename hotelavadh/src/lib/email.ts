@@ -100,7 +100,7 @@ export async function sendBookingConfirmationEmail(params: BookingEmailParams) {
 
               <p style="margin:0;font-size:13px;color:#9ca3af;text-align:center;">
                 We look forward to welcoming you!<br/>
-                <strong style="color:#0F5C5C;">Hotel Avadh</strong> · +91 94285 04802
+                <strong style="color:#0F5C5C;">Hotel Avadh</strong> · +91 98765 98765
               </p>
             </td>
           </tr>

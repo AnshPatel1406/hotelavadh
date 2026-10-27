@@ -252,10 +252,10 @@ export default function DiningPage() {
           <span className="w-px h-4 bg-border hidden sm:block" />
           <div className="flex gap-2 ml-auto">
             <Button asChild variant="outline" size="sm" className="rounded-full h-7 px-4 text-xs">
-              <a href="tel:+919428504802">Call</a>
+              <a href="tel:+919876598765">Call</a>
             </Button>
             <Button asChild size="sm" className="rounded-full h-7 px-4 text-xs bg-green-600 hover:bg-green-700 text-white border-0">
-              <a href="https://wa.me/919428504802" target="_blank" rel="noreferrer">WhatsApp</a>
+              <a href="https://wa.me/919876598765" target="_blank" rel="noreferrer">WhatsApp</a>
             </Button>
           </div>
         </div>
@@ -405,10 +405,10 @@ export default function DiningPage() {
         </div>
         <div className="flex gap-3">
           <Button asChild size="lg" className="shrink-0 rounded-full bg-background text-foreground hover:bg-background/90 px-6">
-            <a href="tel:+919428504802">Call to Reserve</a>
+            <a href="tel:+919876598765">Call to Reserve</a>
           </Button>
           <Button asChild size="lg" className="shrink-0 rounded-full bg-background text-foreground hover:bg-background/90 px-6">
-            <a href="https://wa.me/919428504802" target="_blank" rel="noreferrer">WhatsApp Us →</a>
+            <a href="https://wa.me/919876598765" target="_blank" rel="noreferrer">WhatsApp Us →</a>
           </Button>
         </div>
       </div>

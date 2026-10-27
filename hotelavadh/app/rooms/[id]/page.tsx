@@ -222,14 +222,14 @@ export default async function RoomDetailsPage({
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <a
-                href="tel:+919428504802"
+                href="tel:+919876598765"
                 className="inline-flex items-center gap-2 rounded-xl border border-border/80 bg-background px-4 py-2.5 text-xs font-medium text-foreground hover:bg-muted/50 transition"
               >
                 <Phone className="h-3.5 w-3.5 text-stone-500" />
-                Call +91 94285 04802
+                Call +91 98765 98765
               </a>
               <a
-                href="https://wa.me/919428504802"
+                href="https://wa.me/919876598765"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-medium text-white hover:bg-emerald-700 transition"

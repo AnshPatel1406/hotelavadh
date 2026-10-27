@@ -191,7 +191,7 @@ export default function Navbar() {
                       className="w-full justify-center h-10 border-[#0F5C5C]/30 text-[#0F5C5C] hover:bg-[#0F5C5C]/5"
                       onClick={() => setIsOpen(false)}
                     >
-                      <a href="https://wa.me/919428504802" target="_blank" rel="noreferrer">
+                      <a href="https://wa.me/919876598765" target="_blank" rel="noreferrer">
                         WhatsApp Concierge
                       </a>
                     </Button>

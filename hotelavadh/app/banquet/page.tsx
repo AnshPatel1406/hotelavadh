@@ -110,7 +110,7 @@ export default function BanquetPage() {
             className="rounded-full px-6 bg-[#0F5C5C] hover:bg-[#0C4A4A] text-white shadow-sm"
           >
             <a
-              href="https://wa.me/919428504802?text=Hello%20Hotel%20Avadh%20Team!%20I%20would%20like%20to%20enquire%20about%20booking%20the%20Banquet%20Hall%20/%20Party%20Plot%20for%20an%20event."
+              href="https://wa.me/919876598765?text=Hello%20Hotel%20Avadh%20Team!%20I%20would%20like%20to%20enquire%20about%20booking%20the%20Banquet%20Hall%20/%20Party%20Plot%20for%20an%20event."
               target="_blank"
               rel="noreferrer"
             >
@@ -212,7 +212,7 @@ export default function BanquetPage() {
                     className="w-full justify-center rounded-xl h-10 border-[#0F5C5C]/30 text-[#0F5C5C] hover:bg-[#0F5C5C] hover:text-white transition-colors"
                   >
                     <a
-                      href={`https://wa.me/919428504802?text=Hello%20Hotel%20Avadh!%20I%20am%20interested%20in%20reserving%20the%20${encodeURIComponent(venue.name)}%20for%20my%20event.`}
+                      href={`https://wa.me/919876598765?text=Hello%20Hotel%20Avadh!%20I%20am%20interested%20in%20reserving%20the%20${encodeURIComponent(venue.name)}%20for%20my%20event.`}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -319,7 +319,7 @@ export default function BanquetPage() {
             className="rounded-full bg-white text-[#0F5C5C] hover:bg-white/90 px-8 font-semibold shadow-md"
           >
             <a
-              href="https://wa.me/919428504802?text=Hello%20Hotel%20Avadh!%20I%20would%20like%20to%20plan%20an%20event%20at%20your%20Banquet%20/%20Party%20Plot."
+              href="https://wa.me/919876598765?text=Hello%20Hotel%20Avadh!%20I%20would%20like%20to%20plan%20an%20event%20at%20your%20Banquet%20/%20Party%20Plot."
               target="_blank"
               rel="noreferrer"
             >

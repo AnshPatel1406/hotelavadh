@@ -242,7 +242,7 @@ export default async function ProfilePage() {
                       className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-medium text-white hover:bg-emerald-700 transition shadow-sm"
                     >
                       <MessageCircle className="h-3.5 w-3.5" />
-                      Confirm on WhatsApp (+91 94285 04802)
+                      Confirm on WhatsApp (+91 98765 98765)
                     </a>
                   </div>
                 </div>

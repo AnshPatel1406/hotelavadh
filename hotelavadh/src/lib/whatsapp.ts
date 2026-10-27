@@ -144,7 +144,7 @@ export function generateWhatsAppReservationMessage(
   return lines.join("\n");
 }
 
-export const HOTEL_ADMIN_PHONE = "919428504802";
+export const HOTEL_ADMIN_PHONE = "919876598765";
 
 /**
  * Builds the wa.me click-to-chat URL with the complete encoded reservation message

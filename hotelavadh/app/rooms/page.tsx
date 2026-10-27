@@ -185,7 +185,7 @@ export default async function RoomsPage() {
           </h3>
         </div>
         <a
-          href="tel:+919428504802"
+          href="tel:+919876598765"
           className="shrink-0 self-start md:self-auto inline-flex items-center gap-2 rounded-full bg-background text-foreground px-8 py-3 text-sm font-medium hover:bg-background/90 transition"
         >
           Call Us →
